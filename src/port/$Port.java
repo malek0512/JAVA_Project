@@ -21,7 +21,6 @@ abstract class $Port {
 	/* ** Constructeur ** */
 	/* Inutile d'initialiser Value, car non pertinente si Valide = false */
 	public $Port() {
-		Nom = "";
 		Numero=0;
 		Valide=false;
 	}
@@ -29,8 +28,7 @@ abstract class $Port {
 	/* ** Méthodes ** */
 	protected abstract String tooString();
 	
-	public boolean getValide()
-	{
+	public boolean getValide(){
 		return(this.Valide);
 	}
 }

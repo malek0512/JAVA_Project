@@ -1,7 +1,8 @@
-package composant;
+package composant.recepteur;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import composant._ComposantInOnly;
 
 import port.In;
 
@@ -9,12 +10,11 @@ import port.In;
  au moins un port dans liste de entre
  aucun port dans liste sortie
  */
-public abstract class $Recepteur implements _Composant {
+public abstract class $Recepteur implements _ComposantInOnly {
 	
 	  String Nom;
-	  int idComposant;
-	  private List<In> Ports_Entre;
-	
+	  int Numero;
+	  	
 	  /**
 	   * Constructeur d'un recepteur
 	   * @ensure les ports du composant ne seront pas connectés
@@ -25,40 +25,41 @@ public abstract class $Recepteur implements _Composant {
 	   */
 	  public $Recepteur(String nom, int idComposant, int nbEnt){
 		  this.Nom=nom;
-		  this.idComposant = idComposant;
-		  Ports_Entre = new ArrayList<In>();
+		  this.Numero = idComposant;
 	  }
 	
 	  /**
 	   * identifiant du composant
 	   */
-	  public int IdComposant(){
-		  return idComposant;
+	  public int getNumero(){
+		  return Numero;
 	    }
 	
 	  /**
 	   * revoie le nombre d'entree(s) du composant
 	   */
 	  public int nbEntrees(){
-	    	return Ports_Entre.size();
+	    	return arrayEntrees.size();
 	  }
 	  
 	  /**
 	   * vérifie si chaque ports du composant élémentaire est connecté
 	   */
 	  public boolean estExecutable(){
-		  
 		  int i=0;
-		  
-		  while(i<Ports_Entre.size() && Ports_Entre.get(i).getValide()==true)
-		  {
+		  while(i<arrayEntrees.size() && arrayEntrees.get(i).getValide()==true){
 			  i++ ;
 		  } 	
 		  
-		  return (i>=Ports_Entre.size());
+		  return (i>=arrayEntrees.size());
 	  }
 	    
-	  public List<In> in(){
-		  return Ports_Entre;
+	  public String getNom(){
+		  return Nom;
 	  }
+	  public List<In> entreeList(){
+		  return arrayEntrees;
+	  }
+	  
+	  
 }

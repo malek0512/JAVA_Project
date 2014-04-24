@@ -1,7 +1,8 @@
-package composant;
+package composant.generateur;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import composant._ComposantOutOnly;
 
 import port.Out;
 
@@ -15,12 +16,11 @@ a au moins un port de sortie //verifier le sujet si il n'y aurais pas plutot qu'
 n'a aucun port d'entre
 
 */
-public abstract class $Generateur implements _Composant {
+public abstract class $Generateur implements _ComposantOutOnly {
 	
 	  String Nom;
-	  int idComposant;
-	  private List<Out> Ports_Sortie;
-	
+	  int Numero;
+	  	
 	  /**
 	   * Constructeur d'un generateur
 	   * @ensure les ports du composant ne seront pas connectés
@@ -31,40 +31,36 @@ public abstract class $Generateur implements _Composant {
 	   */
 	  public $Generateur(String nom, int idComposant, int nbSort){
 		  this.Nom=nom;
-		  this.idComposant = idComposant;
-		  Ports_Sortie = new ArrayList<Out>();
+		  this.Numero = idComposant;
 	  }
 	
 	  /**
 	   * identifiant du composant
 	   */
-	  public int IdComposant(){
-		  return idComposant;
+	  public int getNumero(){
+		  return Numero;
 	    }
 	  
 	  /**
 	   * revoie le nombre de sortie(s) du composant
 	   */  
 	  public int nbSorties(){
-	    	return Ports_Sortie.size();
+	    	return arraySorties.size();
 	  }
 
 	  /**
 	   * vérifie si chaque ports du composant élémentaire est connecté
 	   */
 	  public boolean estExecutable(){
-		  
 		  int j=0;
-		  
-		  while(j<=nbSorties() && Ports_Sortie.get(j).getValide()==true)
-		  {
+		  while(j<=nbSorties() && arraySorties.get(j).getValide()==true){
 			  j++ ;
 		  }
 		  
-		  return (j>=Ports_Sortie.size());
+		  return (j>=arraySorties.size());
 	  }
 	  
-	  public List<Out> out(){
-		  return Ports_Sortie;
+	  public List<Out> sortiesList(){
+		  return arraySorties;
 	  }
 }

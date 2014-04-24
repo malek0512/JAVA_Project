@@ -15,9 +15,10 @@ Aucune connexion est libre (entrer ou sortie)
  */
 
 public abstract class $Ferme implements _Circuit {
-	protected List<_Composant> Listcomposant;
+	protected List<_Composant> ListComposant;
+	
 	public $Ferme(){
-		Listcomposant = new LinkedList<_Composant>();  
+		ListComposant = new LinkedList<_Composant>();  
 	}
 	
 	
