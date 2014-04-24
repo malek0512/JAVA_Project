@@ -14,7 +14,6 @@ package port;
 abstract class $Port {
 
 	/* Attributs */
-	protected String Nom;
 	protected int Numero;
 	protected boolean Value;
 	protected boolean Valide;
