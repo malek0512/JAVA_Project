@@ -28,4 +28,9 @@ abstract class $Port {
 	
 	/* ** Méthodes ** */
 	protected abstract String tooString();
+	
+	public boolean getValide()
+	{
+		return(this.Valide);
+	}
 }
