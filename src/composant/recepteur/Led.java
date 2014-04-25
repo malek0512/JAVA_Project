@@ -29,7 +29,7 @@ public class Led extends $Recepteur {
 	 * mise a jour de la variable etat
 	 */
 	public void etat(){
-		if(this.in().get(0).getValue())
+		if(this.entreeList().get(0).getValue())
 			etat = "allumee";
 		else
 			etat = "eteinte";

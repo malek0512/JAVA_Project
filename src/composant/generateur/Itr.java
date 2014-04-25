@@ -12,13 +12,14 @@ public class Itr extends $Generateur {
 	 * la valeur de sortie de Itr initialisée par l'utilisateur
 	 */
 	private String etat;
-	private boolean valeurItr;
+	public boolean valeurItr;
 	
 	/**
 	 * initialise les attributs in et out
 	 */
-	public Itr(String nom, int idComposant){ 
+	public Itr(String nom, int idComposant, boolean valeurItr){ 
 		super(nom,idComposant,1);
+		this.valeurItr=valeurItr;
 	}
 	
 	private void setNiveau(boolean value){
@@ -30,7 +31,7 @@ public class Itr extends $Generateur {
 	*/
 	public void execute(){
 		if(estExecutable()){
-		this.out().get(0).setValue(this.valeurItr);
+			this.sortieList().get(0).setValue(this.valeurItr);
 		}
 	}
 	
@@ -38,7 +39,7 @@ public class Itr extends $Generateur {
 	 * affecte a l'attribut etat sa juste valeur
 	 */
 	public void etat() {
-		etat = "Le port de sortie est a " + this.out().get(0).getValue() +"\n";
+		etat = "Le port de sortie est a " + this.sortieList().get(0).getValue() +"\n";
 	}
 	
 	public String toString(){

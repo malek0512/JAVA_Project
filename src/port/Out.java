@@ -30,7 +30,6 @@ public class Out extends $Port {
 	}
 
 	public Out(String nom, int numero) {
-		this.Nom=nom;
 		this.Numero=numero;
 	}
 
@@ -41,8 +40,8 @@ public class Out extends $Port {
 	 * @param PortE
 	 */
 	public void connect(In PortE){
-		PortE.Value = this.Value;
 		PortE.Valide = true;
+		PortE.Value = this.Value;
 		addPE(PortE);
 	}
 

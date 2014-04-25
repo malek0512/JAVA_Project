@@ -14,7 +14,6 @@ public class In extends $Port {
 	}
 
 	public In (String nom, int numero){
-		this.Nom = nom;
 		this.Numero = numero;
 	}
 	

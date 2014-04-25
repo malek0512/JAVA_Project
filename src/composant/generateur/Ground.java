@@ -21,7 +21,7 @@ public class Ground extends $Generateur {
 	*/
 	public void execute(){
 		if(estExecutable()){
-			this.out().get(0).setValue(false);
+			this.sortieList().get(0).setValue(false);
 		}
 	}
 	
@@ -29,10 +29,11 @@ public class Ground extends $Generateur {
 	 * affecte a l'attribut etat sa juste valeur
 	 */
 	public void etat(){
-		etat = "Le port de sortie est a " + this.out().get(0).getValue() +"\n";
+		etat = "Le port de sortie est a " + this.sortieList().get(0).getValue() +"\n";
 	}
 	
 	public String toString(){
 		return "Le Ground n° " + getNumero() + "\n" + etat;
 	}
+
 }

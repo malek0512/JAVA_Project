@@ -4,6 +4,7 @@ import java.util.List;
 
 import composant._ComposantOutOnly;
 
+import port.In;
 import port.Out;
 
 /*
@@ -20,7 +21,7 @@ public abstract class $Generateur implements _ComposantOutOnly {
 	
 	  String Nom;
 	  int Numero;
-	  	
+	  private int nbSortieMax;
 	  /**
 	   * Constructeur d'un generateur
 	   * @ensure les ports du composant ne seront pas connectés
@@ -29,7 +30,15 @@ public abstract class $Generateur implements _ComposantOutOnly {
 	   * @param nbSort nombre de sorties du composant
 	   * 
 	   */
-	  public $Generateur(String nom, int idComposant, int nbSort){
+	  public $Generateur(String nom, int idComposant, int nbSortieMax){
+			// Initialisation du tableau des ports d'entree et de sortie du
+			// composite,
+			// faute de ne pourvoir etre fait avec un contructeur dans l'interface
+			// _composantOutOnly and In
+			for(int i=0;i<nbSortieMax;i++){
+				arraySorties.add(new Out()); 
+			}
+		  this.nbSortieMax = nbSortieMax;
 		  this.Nom=nom;
 		  this.Numero = idComposant;
 	  }
@@ -60,7 +69,11 @@ public abstract class $Generateur implements _ComposantOutOnly {
 		  return (j>=arraySorties.size());
 	  }
 	  
-	  public List<Out> sortiesList(){
+	  public List<Out> sortieList(){
 		  return arraySorties;
 	  }
+	  
+		public String getNom() {
+			return Nom;
+		}
 }

@@ -24,7 +24,7 @@ public class Non extends $Transformateur {
 	 */
 	public void execute(){
 		if(estExecutable()){
-			this.out().get(0).setValue(!(this.out().get(0).getValue()));
+			this.sortieList().get(0).setValue(!(this.sortieList().get(0).getValue()));
 		}
 	}
 
@@ -40,14 +40,14 @@ public class Non extends $Transformateur {
 	 * affecte a l'attribut etatIn a sa juste valeur
 	 */
 	public void etatIn(){
-		etatIn = "Le port d'entree est a " + this.in().get(0).getValue() +"\n";
+		etatIn = "Le port d'entree est a " + this.entreeList().get(0).getValue() +"\n";
 	}
 		
 	/**
 	 * affecte a l'attribut etatOut a sa juste valeur
 	 */
 	public void etatOut(){
-		etatOut = "Le port de sortie est a " + this.out().get(0).getValue() +"\n";
+		etatOut = "Le port de sortie est a " + this.sortieList().get(0).getValue() +"\n";
 	}
 		
 	public String toString(){

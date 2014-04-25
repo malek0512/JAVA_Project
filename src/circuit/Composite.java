@@ -28,8 +28,17 @@ public class Composite extends $Ouvert implements _ComposantInOnly, _ComposantOu
 	/**
 	 * Permet de creer un composite
 	 */
-	public Composite (int nbEntreeMax, int nbSortieMax){
-		super();
+	public Composite (String nom, int numero, int nbEntreeMax, int nbSortieMax){
+		// Initialisation du tableau des ports d'entree et de sortie du composite, 
+		// faute de ne pourvoir etre fait avec un contructeur dans l'interface _composantOutOnly and In 
+		for(int i=0;i<nbEntreeMax;i++){
+			arrayEntrees.add(new In()); 
+		}
+		for(int i=0;i<nbSortieMax;i++){
+			arraySorties.add(new Out()); 
+		}
+		this.Nom=nom;
+		this.Numero=numero;
 		this.nbEntreeMax=nbEntreeMax;
 		this.nbSortieMax=nbSortieMax;
 		ListComposant= new LinkedList<_Composant>();
@@ -53,14 +62,21 @@ public class Composite extends $Ouvert implements _ComposantInOnly, _ComposantOu
 	public void ajoutComposant(_Composant composant) {
 		ListComposant.add(composant);
 	}
-
-	public int ajoutConnexion(_ComposantOutOnly A, int noSortie, _ComposantInOnly B, int noEntree){
-		return 0;
+	
+	/* Ajoute un composant a la liste des composants, sans aucune precaution*/
+	public void ajoutListComposants(List<_Composant> l) {
+		ListComposant.addAll(l);
 	}
+
 	void connect(_ComposantOutOnly A, int noPortSortie, _ComposantInOnly B, int noPortEntree){
 		In PortE = B.entreeList().get(noPortEntree);
 		A.sortieList().get(noPortSortie).connect(PortE); 
 		// RMQ : PortSortie.connect se charge de modifié PortEntre.Value et PortEntre.Valide=1 
+	}
+	void deconnect(_ComposantOutOnly A, int noPortSortie, _ComposantInOnly B, int noPortEntree){
+		In PortE = B.entreeList().get(noPortEntree);
+		A.sortieList().get(noPortSortie).deconnect(PortE); 
+		// RMQ : PortSortie.donnect se charge de modifié PortEntre.Valide=0 et supprimer la 1ere occurrence de PortE dans la liste du port de sortie 
 	}
 
 	// ***********************************************
@@ -106,5 +122,4 @@ public class Composite extends $Ouvert implements _ComposantInOnly, _ComposantOu
 		return nbSortieMax - nbSorties();
 	}
 
-	
 }

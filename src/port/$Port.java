@@ -16,6 +16,8 @@ abstract class $Port {
 	/* Attributs */
 	protected int Numero;
 	protected boolean Value;
+
+
 	protected boolean Valide;
 	
 	/* ** Constructeur ** */
@@ -30,5 +32,15 @@ abstract class $Port {
 	
 	public boolean getValide(){
 		return(this.Valide);
+	}
+	
+	public void setValue(boolean v){
+		this.Value=v;
+	}
+	/**
+	 * @return the value
+	 */
+	public boolean getValue() {
+		return Value;
 	}
 }

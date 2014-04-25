@@ -23,7 +23,7 @@ public class Et extends $Transformateur {
  */
 	public void execute(){
 		if(estExecutable()){
-			this.out().get(0).setValue(this.in().get(0).getValue() && this.in().get(1).getValue());
+			this.sortieList().get(0).setValue(this.entreeList().get(0).getValue() && this.entreeList().get(1).getValue());
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class Et extends $Transformateur {
   public void etatIn(){
 	    etatIn = "";
 		for(int i=0; i<=this.nbEntrees(); i++){
-			etatIn = this.etatIn + "Le port d'entree " + i + " est a " + this.in().get(i).getValue() +"\n";
+			etatIn = this.etatIn + "Le port d'entree " + i + " est a " + this.entreeList().get(i).getValue() +"\n";
 		}
   }
   
@@ -50,10 +50,18 @@ public class Et extends $Transformateur {
 	 * affecte a l'attribut etatOut sa juste valeur
 	 */
   public void etatOut(){
-		etatOut = "Le port de sortie est a " + this.out().get(0).getValue() +"\n";
+		etatOut = "Le port de sortie est a " + this.sortieList().get(0).getValue() +"\n";
   }
 	
   public String toString(){
 		return "Le Et n° " + getNumero() + "\n" + etat;
   }
+
+@Override
+public String getNom() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
 }
