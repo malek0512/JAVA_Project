@@ -73,7 +73,7 @@ abstract class $Port {
 
 	/* ** Méthodes ** */
 	public String toString() {
-		return "Port n°" + Numero;
+		return "Port n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}
 
 }

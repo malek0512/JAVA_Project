@@ -24,6 +24,7 @@ public abstract class $Recepteur extends $Composant {
 	 */
 	public $Recepteur(String nom, int idComposant, int nbEntreeMax) {
 		super(nom,idComposant,nbEntreeMax,0);
+		
 	}
 
 	public String toString(){

@@ -42,6 +42,7 @@ public class Out extends $Port {
 	 */
 	public void connect(In PortE){
 		PortE.Valide = true;
+		this.Valide = true;
 		PortE.Value = this.Value;
 		ListPE.add(PortE);
 	}
@@ -81,7 +82,7 @@ public class Out extends $Port {
 	}
 	
 	public String toString() {
-		return "PortS n°" + Numero;
+		return "PortS n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}
 
 	/* Accesseur pour les invariants et requires */

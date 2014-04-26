@@ -70,6 +70,7 @@ public abstract class $Composant {
 		super();
 		Nom = nom;
 		Numero = numero;
+		this.value = niveau.Bas;
 		this.nbEntreeMax = nbEntreeMax;
 		this.nbSortieMax = nbSortieMax;
 		arraySorties = new ArrayList<Out>(this.nbEntreeMax);
@@ -146,7 +147,7 @@ public abstract class $Composant {
 				&& arrayEntrees.get(i).getValide() == true) {
 			i++;
 		}
-		while (j < nbSorties() && arraySorties.get(i).getValide() == true) {
+		while (j < nbSorties() && arraySorties.get(j).getValide() == true) {
 			j++;
 		}
 		return (i == arrayEntrees.size() && j == arraySorties.size());

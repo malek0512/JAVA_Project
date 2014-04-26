@@ -33,7 +33,7 @@ public class In extends $Port {
 //	}
 	
 	public String toString() {
-		return "PortE n°" + Numero;
+		return "PortE n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}
 
 }
