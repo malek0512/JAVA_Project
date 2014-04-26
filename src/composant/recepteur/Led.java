@@ -7,8 +7,6 @@ package composant.recepteur;
  */
 public class Led extends $Recepteur {
 	
-	private String etat;
-
 	/**
 	 * initialise les attributs in et out
 	 */
@@ -21,21 +19,14 @@ public class Led extends $Recepteur {
 	*/
 	public void execute(){
 		if(estExecutable()){
-			etat();	
+			if (this.arrayEntrees.get(0).getValue())
+				this.value = niveau.Haut;
+			else 
+				this.value = niveau.Bas;
 		}
 	}
 
-	/**
-	 * mise a jour de la variable etat
-	 */
-	public void etat(){
-		if(this.entreeList().get(0).getValue())
-			etat = "allumee";
-		else
-			etat = "eteinte";
-	}
-
 	public String toString(){
-		return "La Led n° " + getNumero() + "\n" + etat;
+		return "La Led n° " + getNumero() + " est au niveau "+ value.toString();
 	}
 }

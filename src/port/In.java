@@ -1,4 +1,7 @@
 package port;
+
+import composant.$Composant;
+
 /*
 attribut :
 bool valide
@@ -8,19 +11,29 @@ methode :
  */
 public class In extends $Port {
 
-	/* Constructeurs */
-	public In() {
-		super();
+	private $Composant A;
+	
+	/**
+	 * @return the a
+	 */
+	public $Composant getComposant() {
+		return A;
 	}
 
-	public In (String nom, int numero){
-		this.Numero = numero;
+
+	/* Constructeurs */
+	public In($Composant A) {
+		super();
+		this.A = A;
 	}
+
 	
-	@Override
-	protected String tooString() {
-		// TODO Auto-generated method stub
-		return null;
+//	public In (String nom, int numero){
+//		this.Numero = numero;
+//	}
+	
+	public String toString() {
+		return "PortE n°" + Numero;
 	}
 
 }

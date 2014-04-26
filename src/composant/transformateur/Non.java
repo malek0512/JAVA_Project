@@ -7,10 +7,6 @@ package composant.transformateur;
  *
  */
 public class Non extends $Transformateur {
-	
-	private String etat;
-	private String etatIn;
-	private String etatOut;
 
 	/**
 	 * initialise les attributs in et out
@@ -20,37 +16,10 @@ public class Non extends $Transformateur {
 	}
 
 	/**
-	 * la fonction booléenne Non
+	 * affecte a l'attribut etat sa juste valeur
 	 */
-	public void execute(){
-		if(estExecutable()){
-			this.sortieList().get(0).setValue(!(this.sortieList().get(0).getValue()));
-		}
+	public void calcul(){
+		this.value = niveauFromBool( ! arrayEntrees.get(0).getValue()); 
 	}
 
-	/**
-	 * affecte a l'attribut etat a sa juste valeur
-	 */
-	public void etat(){
-		etatIn();
-		etatOut();
-		etat = etatIn + etatOut;
-	}
-	/**
-	 * affecte a l'attribut etatIn a sa juste valeur
-	 */
-	public void etatIn(){
-		etatIn = "Le port d'entree est a " + this.entreeList().get(0).getValue() +"\n";
-	}
-		
-	/**
-	 * affecte a l'attribut etatOut a sa juste valeur
-	 */
-	public void etatOut(){
-		etatOut = "Le port de sortie est a " + this.sortieList().get(0).getValue() +"\n";
-	}
-		
-	public String toString(){
-		return "Le Non n° " + getNumero() + "\n" + etat;
-	}
 }

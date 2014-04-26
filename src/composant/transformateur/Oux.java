@@ -1,23 +1,21 @@
 package composant.transformateur;
 
-public class Oux extends Ou{
+public class Oux extends $Transformateur {
 
 	public Oux(String nom, int idComposant) {
-		super(nom, idComposant);
+		super(nom, idComposant,2,1);
 	}
 
 	/**
-	 * la fonction booléenne Ou
-	 * out[1] = in[1].value() || in[2].value()
+	 * affecte a l'attribut etat sa juste valeur
 	 */
-		public void execute(){
-			if(estExecutable()){
-				boolean entree1 = this.entreeList().get(0).getValue();
-				boolean entree2 = this.entreeList().get(1).getValue();
-				if (entree1 && entree2)
-					this.sortieList().get(0).setValue(false);
-				else 
-					this.sortieList().get(0).setValue(entree1 || entree2);
-			}
-		}
+	public void calcul() {
+		boolean entree1 = this.entreeList().get(0).getValue();
+		boolean entree2 = this.entreeList().get(1).getValue();
+		if (entree1 && entree2)
+			this.value = niveauFromBool(false);
+		else
+			this.value = niveauFromBool(entree1 || entree2);
+	}
+
 }

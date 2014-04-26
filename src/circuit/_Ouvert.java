@@ -3,7 +3,6 @@ package circuit;
 import java.util.LinkedList;
 import java.util.List;
 
-import composant._Composant;
 
 /*
 --Invariant--
@@ -19,11 +18,11 @@ retourner liste des port de  sortie libre
 
 */
 
-public abstract class $Ouvert implements _Circuit {
+public interface _Ouvert extends _Circuit {
 	
-	protected List<_Composant> ListComposant;
-	public $Ouvert(){
-		ListComposant = new LinkedList<_Composant>();  
-	}	
+//	protected List<_Composant> ListComposant;
+//	public _Ouvert(){
+//		ListComposant = new LinkedList<_Composant>();  
+//	}	
 	
 }

@@ -35,16 +35,28 @@ public class Out extends $Port {
 
 	/* Méthodes */
 	/**
-	 * @ensure (que le port est branché et sa valeur initialisée) , le port est supprimer de ListPE
-	 * @requrie !(PortE != null) && !(PortE.valide == false)
+	 * @ensure transmet la valeur de this.Value a PortE (que le port est branché et sa valeur initialisée)
+	 * @esnure PortE.value = this.Value && PortE.Valide == true && PortE appartient this.getListPE()  
+	 * @requrie !(PortE != null)
 	 * @param PortE
 	 */
 	public void connect(In PortE){
 		PortE.Valide = true;
 		PortE.Value = this.Value;
-		addPE(PortE);
+		ListPE.add(PortE);
 	}
 
+	/**
+	 * @ensure transmet la valeur de this.Value à sur l'ensemble des PortE
+	 * @ensure this.getListPE().get(i).value == this.value && this.getListPE().get(i).valide == true    
+	 */
+	public void connectall(){
+		for(int i=0;i<ListPE.size(); i++){
+			ListPE.get(i).Valide=true;
+			ListPE.get(i).Value=this.Value;
+		}	
+	}
+	
 	/**
 	 * @ensure que le port n'est plus branché
 	 * @requrie !(PortE != null) && !(PortE.valide == false)
@@ -56,34 +68,28 @@ public class Out extends $Port {
 	}
 	
 	/**
-	 * @require !(PortE != null) && !(PortE.valide == false)
+	 * @require !(PortE != null)
 	 * @ensure que le PortE est brancher a la sortie :  
 	 * @param PortE
 	 */
-	private void addPE(In PortE){
+	public void addConnexion(In PortE, int numeroComposant){
 		if (PortE != null){
-			if (PortE.Valide == true)
+				PortE.Valide = true;
 				ListPE.add(PortE);
-			else
-				throw new Require ("! (PortE.valide == false)");
 		} else 
 			throw new Require("! (PortE != null)");
 	}
 	
-	@Override
-	public String tooString() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+		return "PortS n°" + Numero;
 	}
 
 	/* Accesseur pour les invariants et requires */
 	/**
 	 * @return the listPE
 	 */
-	public LinkedList<In> getListPE() {
+	public LinkedList<In> getListConnexion() {
 		return new LinkedList<In>(ListPE);
 	}
 
-	
-	
 }

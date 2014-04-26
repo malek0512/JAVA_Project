@@ -13,8 +13,8 @@ ajout d'un composant
 public interface _Circuit {
 	
 	// Fonction pour les demontration d'invariants Circuit fermé
-	public int nbPortEntreeLibre();
-	public int nbPortSortieLibre();
+//	public int nbPortEntreeLibre();
+//	public int nbPortSortieLibre();
 	
 	
 	
