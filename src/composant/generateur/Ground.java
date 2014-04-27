@@ -1,5 +1,7 @@
 package composant.generateur;
 
+import java.util.Iterator;
+
 
 /**
  * 
@@ -16,5 +18,7 @@ public class Ground extends $Generateur {
 		value = niveau.Bas;
 		spreadNiveau();
 	}
+
+
 
 }

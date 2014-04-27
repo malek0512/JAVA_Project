@@ -27,11 +27,6 @@ public class In extends $Port {
 		this.A = A;
 	}
 
-	
-//	public In (String nom, int numero){
-//		this.Numero = numero;
-//	}
-	
 	public String toString() {
 		return "PortE n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}

@@ -107,6 +107,16 @@ public class Ferme implements _Circuit {
 			throw new Require ("Attention le circuit n'est pas executable"); 
 		}
 	}
+
+	public String toString(){
+		String res = "\n";
+		for(int i=0;i<listGenerateur.size();i++)
+			res += listGenerateur.get(i).toString() + "\n";
+		res += "\n";
+		for(int i=0;i<listRecepteur.size();i++)
+			res += listRecepteur.get(i).toString() + "\n";
+		return res;
+	}
 	
 	public String toDebug(){
 		String res = "\n";
