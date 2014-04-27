@@ -90,7 +90,7 @@ public class Out extends $Port {
 	 * @return the listPE
 	 */
 	public LinkedList<In> getListConnexion() {
-		return new LinkedList<In>(ListPE);
+		return (LinkedList<In>) (ListPE);
 	}
 
 }

@@ -1,13 +1,16 @@
 package circuit;
-import composant.$Composant.niveau;
-//import composant.generateur.$Generateur;
-import composant.generateur.Itr;
-import composant.recepteur.Led;
-import composant.recepteur.$Recepteur;
-import composant.transformateur.Oux;
-import circuit.Ferme;
 
-public class TestOuX {
+import composant.$Composant.niveau;
+import composant.generateur.Itr;
+import composant.recepteur.$Recepteur;
+import composant.recepteur.Led;
+import composant.transformateur.Oux;
+
+public class CircuitTestUnitaire {
+
+	public CircuitTestUnitaire() {
+		// TODO Auto-generated constructor stub
+	}
 
 	
 	// Attribut ListeComposants
@@ -35,7 +38,6 @@ public class TestOuX {
 		Circuit.execute();
 		System.out.println(led.toString());
 		
-//		System.out.println(Circuit.toDebug());
 		/* 2eme test */
 		inter1.setNiveau(niveau.Bas);
 		inter2.setNiveau(niveau.Haut);
@@ -43,8 +45,6 @@ public class TestOuX {
 		System.out.println(inter2.toString());
 		Circuit.execute();
 		System.out.println(led.toString());
-		
-//		System.out.println(Circuit.toDebug());
 		
 		/* 3eme test */
 		inter1.setNiveau(niveau.Haut);
@@ -54,7 +54,6 @@ public class TestOuX {
 		Circuit.execute();
 		System.out.println(led.toString());
 		
-//		System.out.println(Circuit.toDebug());
 		/* 4eme test */
 		inter1.setNiveau(niveau.Haut);
 		inter2.setNiveau(niveau.Haut);
@@ -63,7 +62,6 @@ public class TestOuX {
 		Circuit.execute();
 		System.out.println(led.toString());
 		
-//		System.out.println(Circuit.toDebug());
 //		inter1.execute();
 //		inter1.execute();
 //		ou_exclusif.execute();

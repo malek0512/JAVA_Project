@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import port.In;
-
+import jus.util.assertion.*;
 import composant.$Composant;
 import composant.generateur.$Generateur;
 import composant.recepteur.$Recepteur;
@@ -79,11 +79,12 @@ public class Ferme implements _Circuit {
 		int i=0;
 		while (i < listGenerateur.size() && OK){
 			OK = OK && listGenerateur.get(i).estExecutable();
+			OK = OK && estExecutableCircuit(listGenerateur.get(i), OK);
 			i++;
-		}
-		
+		}	
 		return OK;
 	}
+	
 	public void execute($Composant c){
 		c.execute();
 		int i=0;
@@ -102,6 +103,21 @@ public class Ferme implements _Circuit {
 			for(int i=0;i<listGenerateur.size();i++){
 				execute(listGenerateur.get(i));
 			}
+		} else {
+			throw new Require ("Attention le circuit n'est pas executable"); 
 		}
+	}
+	
+	public String toDebug(){
+		String res = "\n";
+		for(int i=0;i<listGenerateur.size();i++)
+			res += listGenerateur.get(i).toDebug() + "\n";
+		res += "\n";
+		for(int i=0;i<listComposant.size();i++)
+			res += listComposant.get(i).toDebug() + "\n";
+		res += "\n";
+		for(int i=0;i<listRecepteur.size();i++)
+			res += listRecepteur.get(i).toDebug() + "\n";
+		return res;
 	}
 }

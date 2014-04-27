@@ -1,7 +1,9 @@
 package composant;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
 
 import port.In;
 import port.Out;
@@ -54,7 +56,7 @@ import port.Out;
  * invariant :nbEntrees + nbSorties > 0
  */
 
-public abstract class $Composant {
+public abstract class $Composant implements Comparable<$Composant> {
 
 	// Attributs
 	protected List<Out> arraySorties;
@@ -65,12 +67,58 @@ public abstract class $Composant {
 	protected int nbSortieMax;
 	public enum niveau {Bas,Haut};
 	protected niveau value;
+	public enum couleur {BLANC,GRIS,NOIR};
+	protected couleur c;
+	protected int debut,fin;
+	
+	/**
+	 * @return the debut
+	 */
+	public int getDebut() {
+		return debut;
+	}
+
+	/**
+	 * @param debut the debut to set
+	 */
+	public void setDebut(int debut) {
+		this.debut = debut;
+	}
+
+	/**
+	 * @return the fin
+	 */
+	public int getFin() {
+		return fin;
+	}
+
+	/**
+	 * @param fin the fin to set
+	 */
+	public void setFin(int fin) {
+		this.fin = fin;
+	}
+
+	/**
+	 * @return the c
+	 */
+	public couleur getC() {
+		return c;
+	}
+
+	/**
+	 * @param c the c to set
+	 */
+	public void setC(couleur c) {
+		this.c = c;
+	}
 
 	public $Composant(String nom, int numero, int nbEntreeMax, int nbSortieMax) {
 		super();
 		Nom = nom;
 		Numero = numero;
 		this.value = niveau.Bas;
+		this.c = couleur.BLANC;
 		this.nbEntreeMax = nbEntreeMax;
 		this.nbSortieMax = nbSortieMax;
 		arraySorties = new ArrayList<Out>(this.nbEntreeMax);
@@ -190,10 +238,17 @@ public abstract class $Composant {
 		}
 	}
 
+	public int compareTo($Composant o) {
+		return o.fin;
+	}
+	
 	/**
 	 * 
 	 * @return String
 	 */
 	public abstract String toString();
 
+	public String toDebug(){
+		return Nom + " niveau " + getNiveau().toString() +":\n PE :" +entreeList().toString() + ",\n PS :" +sortieList().toString();
+	}
 }

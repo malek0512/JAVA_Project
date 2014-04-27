@@ -1,5 +1,7 @@
 package composant.recepteur;
 
+import composant.$Composant;
+
 /**
  * 
  * Classe Led
@@ -29,4 +31,7 @@ public class Led extends $Recepteur {
 	public String toString(){
 		return "La Led n° " + getNumero() + " est au niveau "+ value.toString();
 	}
+
+
+
 }
