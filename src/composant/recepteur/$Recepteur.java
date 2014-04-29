@@ -30,5 +30,12 @@ public abstract class $Recepteur extends $Composant {
 	public String toString(){
 		return "Recepteur " + Nom + "N°" + Numero;
 	}
+	
+	/**
+	 * @author Alex
+	 */
+	public String toString2(){
+		return "<" + Numero + "|" + Nom + "(" + nbEntreeMax + ",0)" + infoComplementaire() + ">";
+	}
 
 }

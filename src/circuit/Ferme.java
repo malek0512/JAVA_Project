@@ -60,7 +60,7 @@ public class Ferme implements _Circuit {
 			// RMQ : PortSortie.donnect se charge de modifié PortEntre.Valide=0 et supprimer la 1ere occurrence de PortE dans la liste du port de sortie
 		}
 	}
-	public boolean estExecutableCircuit($Composant c, boolean OK){
+	private boolean estExecutableCircuit($Composant c, boolean OK){
 		OK = c.estExecutable();
 		int i=0;
 		while (i<c.nbSorties() && OK){
@@ -85,7 +85,7 @@ public class Ferme implements _Circuit {
 		return OK;
 	}
 	
-	public void execute($Composant c){
+	private void execute($Composant c){
 		c.execute();
 		int i=0;
 		while (i<c.nbSorties()){

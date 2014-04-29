@@ -24,7 +24,27 @@ abstract class $Port {
 		Numero=0;
 		Valide=false;
 	}
-
+	/**
+	 * construit le port avec le numero donné en argument
+	 * @author Alex
+	 */
+	public $Port(int numero){
+		this.Numero=numero;
+		this.Valide=false;
+	}
+	
+	/**
+	 * construit le port avec le numero donné en argument et la value
+	 * @ensure getValide == true //normal vue qu'il possede une valeur desormais
+	 * @author Alex
+	 */
+	public $Port(int numero, boolean value){
+		this.Numero=numero;
+		this.Valide=true;
+		this.Value=value;
+		
+	}
+	
 	/* ** Accesseurs et Getteur ** */ 
 	/**
 	 * Le booleen Valide == true ssi il est connecter a un Port de sortie
@@ -75,5 +95,6 @@ abstract class $Port {
 	public String toString() {
 		return "Port n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}
+
 
 }

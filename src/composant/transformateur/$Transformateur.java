@@ -43,4 +43,18 @@ public abstract class $Transformateur extends $Composant {
 	public String toString(){
 		return "Transformateur " + Nom + " N° " + Numero + " est au niveau " + value.toString();
 	}
+	
+	/**
+	 * @author Alex
+	 */
+	public String toString2(){
+		String res = new String("<" + Numero + "|" + Nom + "(" + nbEntreeMax + "," + nbSortieMax + ")" + infoComplementaire() + "->");
+		res.concat(arraySorties.get(0).toString());
+		for (int i=1; i<arraySorties.size(); i++)
+		{
+			res.concat("\n\t->"+ arraySorties.get(i).toString());
+		}
+		res.concat(">");
+		return res;
+	}
 }

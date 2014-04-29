@@ -251,4 +251,22 @@ public abstract class $Composant implements Comparable<$Composant> {
 	public String toDebug(){
 		return Nom + " niveau " + getNiveau().toString() +":\n PE :" +entreeList().toString() + ",\n PS :" +sortieList().toString();
 	}
+	
+	/**
+	 * ajoute au composant un port de sortie si il n'existe pas, y ajoute juste une connexion
+	 * @param numS : numero de sortie du composant
+	 * @param numC : numero du composant qui va etre connecter
+	 * @param numSC : numero du port d'entre du composant destinataire
+	 * @author Alex
+	 */
+//	protected abstract addSortie(int numS,int numC, int numSC);
+	
+	/**
+	 * info complementaire dependant de chaque composant, par exemple, une DEL renverra "Allumer" ou "Eteint"
+	 * @author Alex
+	 */
+	protected String infoComplementaire(){ // depend de chaque composant
+		return null;
+	}
+
 }

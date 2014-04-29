@@ -56,4 +56,15 @@ public abstract class $Generateur extends $Composant implements Iterable<Void> {
 	public String toString() {
 		return "Generateur " + Nom + " N° " + Numero + " a l'etat " + getNiveau().toString();
 	}
+	
+	public String toString2(){
+		String res = new String("<" + Numero + "|" + Nom + "(0," + nbSortieMax + ")" + infoComplementaire() + "->");
+		res.concat(arraySorties.get(0).toString());
+		for (int i=1; i<arraySorties.size(); i++)
+		{
+			res.concat("\n\t->"+ arraySorties.get(i).toString());
+		}
+		res.concat(">");
+		return res;
+	}
 }
