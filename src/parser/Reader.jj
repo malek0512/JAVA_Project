@@ -1,0 +1,84 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */
+options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(EG1)package parser;
+import composant.$Composant.niveau;
+import composant.generateur.$Generateur;
+import composant.transformateur.$Transformateur;
+import composant.recepteur.$Recepteur;
+import composant.generateur.*;
+import composant.transformateur.*;
+import composant.recepteur.*;
+import composant.*;
+import circuit.composite.*;
+import circuit.*;
+import circuit.Ferme;
+import circuit.composite.Composite;
+
+public class EG1{
+private static $Composant which_composant(String name, int num){
+  switch (name){
+ 	case "Itr" : return ($Composant) new Itr(name,num,niveau.Bas); 
+ 	case "Vcc" : return ($Composant) new Vcc(name,num); 
+ 	case "Gnd" : return ($Composant) new Ground(name,num); 
+ 	case "Led" : return ($Composant) new Led(name,num); 
+ 	case "Et" : return ($Composant) new Et(name,num); 
+ 	case "Non" : return ($Composant) new Non(name,num); 
+ 	case "Ou" : return ($Composant) new Ou(name,num); 
+ 	case "Oux" : return ($Composant) new Oux(name,num); 
+ 	default:
+ 		return null; //Ca serait un composite definit avant
+	}
+}  public static void main(String args []) throws ParseException  {    EG1 parser = new EG1(System.in);
+    System.out.println("Entrer un circuit :" );
+    Ferme circuit = DEF_CIRCUIT();    System.out.println(circuit.toString());  }}PARSER_END(EG1)SKIP :{  " "| "\r"| "\t"| "\n"}
+
+//Attention comme en caml, le match des token se fait dans de maniere sequentielle
+//Ne mettre aucun apres ID
+//TOKEN ://{ < CIRCUIT: "circuit" >//| < COMPOSITE: "composite" >//| < PVIRGULE: ";" >//| < VIRGULE: "," >//| < PAR_OU: "(" >//| < PAR_FER: ")" >//| < CRO_OU: "[" >//| < CRO_FER: "]" >//| < DIESE: "#" >//| < DASH: "-" >//| < ARROW_RIGHT: ">" >//| < ARROW_LEFT: "<" >////}
+TOKEN : /* OPERATORS */{  < NUM: ( <DIGIT> )+ >
+| < ID: <LETTER> (<DIGIT> | <LETTER>)+ >
+| < #LETTER: ["a"-"z","A"-"Z"] >
+| < #DIGIT: ["0" - "9"] > }Ferme CIRCUIT() : {	Token numt, numSt,numBt,numSBt,namt;	int nbS = 0;	int num, numS,numB,numSB;	String name;	Ferme res = new Ferme();
+	$Composant comp;}{	(		"<" numt=<NUM> 		"|" namt=<ID>		//Dans le cas d'un led,  //pas de sortie		(		    ">"			{num  = Integer.parseInt(numt.image);			 name = namt.image;			 res.addComposant(new Led(name,num));} 			//Ici il n'existe qu'un seul type de recepteur, sinon nous aurons qu'a faire un switch nam 		)?									//Dans les autres cas //au moins une sortie		(                             						//*			"->#"			numSt=<NUM>			"("			(								//* pour chaque composant				numBt=<NUM> "#" numSBt=<NUM>
+								{ num  = Integer.parseInt(numt.image);
+			 	  name = namt.image;
+				  numS = Integer.parseInt(numSt.image);				  numB = Integer.parseInt(numBt.image);				  numSB = Integer.parseInt(numSBt.image);				  comp = which_composant(name,num);				  nbS++; 						// Je ne vois pas a quoi sert cette variable				  comp.addSortie(numS,numB,numSB);													    // Il faut qu'on ajoute une base de donnée pour sauvegarder, la donnée de connexion, car le composant auquel on souhaite le relier n'existe peut etre pas
+			      res.addComposant(comp);   // Obligatoirement ici, car dans le cas d'un Epsilon on ajoute null				}				(",")?			)*			")"		)*		">"	)*	//fini de lire la liste des composant du circuit	{return res;}}
+
+
+Ferme DEF_CIRCUIT() : 
+{ Token namet;
+  String name; 
+  Ferme circuit = new Ferme();
+  Composite compo;
+} 
+{
+  	//Ajouté par malek :
+	(
+		"composite" 
+		namet=<ID> 
+		
+		{
+		  //compo = COMPOSITE(); A faire
+		  name = namet.image;
+		  circuit.setNom(name);
+
+		}
+	)?
+
+	//Alex
+	(
+		"circuit" 
+		namet=<ID> 
+		{
+		  circuit = CIRCUIT(); //Je pense qu'on le lui passera en parametre, sinon on redescent les ligne cu-dessus, en dessous
+		  name = namet.image;
+		  circuit.setNom(name);
+
+		}
+	)?
+	
+	
+	{return circuit;}
+}

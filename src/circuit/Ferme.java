@@ -24,12 +24,14 @@ public class Ferme implements _Circuit {
 	protected List<$Generateur> listGenerateur;
 	protected List<$Composant> listComposant;
 	protected List<$Recepteur> listRecepteur;
+	private String Nom;
 	
 	public Ferme(){
 		listGenerateur = new LinkedList<$Generateur>();
 		listComposant = new LinkedList<$Composant>();  
 		listRecepteur = new LinkedList<$Recepteur>();
 	}
+	
 	
 	public void addGenerateur ($Generateur g){
 		if (! listGenerateur.contains(g))
@@ -129,5 +131,12 @@ public class Ferme implements _Circuit {
 		for(int i=0;i<listRecepteur.size();i++)
 			res += listRecepteur.get(i).toDebug() + "\n";
 		return res;
+	}
+	
+	/**
+	 * @param nom the nom to set
+	 */
+	public void setNom(String nom) {
+		Nom = nom;
 	}
 }

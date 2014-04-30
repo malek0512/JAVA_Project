@@ -55,7 +55,17 @@ import port.Out;
 /**
  * invariant :nbEntrees + nbSorties > 0
  */
+class Couple
+{
+    public int x;
+    public int y;
 
+    public Couple(int x, int y)
+    {
+         this.x = x;
+         this.y = y;
+    }
+}
 public abstract class $Composant implements Comparable<$Composant> {
 
 	// Attributs
@@ -70,48 +80,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 	public enum couleur {BLANC,GRIS,NOIR};
 	protected couleur c;
 	protected int debut,fin;
-	
-	/**
-	 * @return the debut
-	 */
-	public int getDebut() {
-		return debut;
-	}
-
-	/**
-	 * @param debut the debut to set
-	 */
-	public void setDebut(int debut) {
-		this.debut = debut;
-	}
-
-	/**
-	 * @return the fin
-	 */
-	public int getFin() {
-		return fin;
-	}
-
-	/**
-	 * @param fin the fin to set
-	 */
-	public void setFin(int fin) {
-		this.fin = fin;
-	}
-
-	/**
-	 * @return the c
-	 */
-	public couleur getC() {
-		return c;
-	}
-
-	/**
-	 * @param c the c to set
-	 */
-	public void setC(couleur c) {
-		this.c = c;
-	}
+	protected List<Couple> memoireSortie;
 
 	public $Composant(String nom, int numero, int nbEntreeMax, int nbSortieMax) {
 		super();
@@ -121,8 +90,9 @@ public abstract class $Composant implements Comparable<$Composant> {
 		this.c = couleur.BLANC;
 		this.nbEntreeMax = nbEntreeMax;
 		this.nbSortieMax = nbSortieMax;
-		arraySorties = new ArrayList<Out>(this.nbEntreeMax);
-		arrayEntrees = new ArrayList<In>(this.nbSortieMax);
+		arraySorties = new ArrayList<Out>(this.nbSortieMax); //Attention erreur possible
+		arrayEntrees = new ArrayList<In>(this.nbEntreeMax);
+		memoireSortie = new ArrayList<Couple>(this.nbSortieMax);
 		for (int i = 0; i < nbEntreeMax; i++) {
 			arrayEntrees.add(new In(this));
 			arrayEntrees.get(i).setNumero(i);
@@ -268,5 +238,52 @@ public abstract class $Composant implements Comparable<$Composant> {
 	protected String infoComplementaire(){ // depend de chaque composant
 		return null;
 	}
+	/**
+	 * @return the debut
+	 */
+	public int getDebut() {
+		return debut;
+	}
 
+	/**
+	 * @param debut the debut to set
+	 */
+	public void setDebut(int debut) {
+		this.debut = debut;
+	}
+
+	/**
+	 * @return the fin
+	 */
+	public int getFin() {
+		return fin;
+	}
+
+	/**
+	 * @param fin the fin to set
+	 */
+	public void setFin(int fin) {
+		this.fin = fin;
+	}
+
+	/**
+	 * @return the c
+	 */
+	public couleur getC() {
+		return c;
+	}
+
+	/**
+	 * @param c the c to set
+	 */
+	public void setC(couleur c) {
+		this.c = c;
+	}
+	
+	/**
+	 * Mémorise la connexion sans auncune connexion au composant
+	 */
+	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
+		memoireSortie.add(numeroSortie, new Couple(numeroComposant,numeroEntreeComposant));
+	}
 }

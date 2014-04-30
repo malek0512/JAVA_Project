@@ -30,30 +30,8 @@ public class Composite extends $Composant implements _Ouvert {
 	private List<$Composant> ListComposant;
 	private int date =0;
 	private Boolean executable = true;
-	
-	/**
-	 * @return the listComposant
-	 */
-	public List<$Composant> getListComposant() {
-		return ListComposant;
-	}
-
-	private List<Out> arraySortiesInterieure;
-	/**
-	 * @return the arraySortiesInterieure
-	 */
-	public List<Out> getArraySortiesInterieure() {
-		return arraySortiesInterieure;
-	}
-
-	/**
-	 * @return the arrayEntreesInterieure
-	 */
-	public List<In> getArrayEntreesInterieure() {
-		return arrayEntreesInterieure;
-	}
-
 	private List<In> arrayEntreesInterieure;
+	private List<Out> arraySortiesInterieure;
 	
 	/**
 	 * Constructeur Composite
@@ -245,7 +223,26 @@ public class Composite extends $Composant implements _Ouvert {
 	public void ajoutListComposants(List<$Composant> l) {
 		ListComposant.addAll(l);
 	}
+	/**
+	 * @return the listComposant
+	 */
+	public List<$Composant> getListComposant() {
+		return ListComposant;
+	}
 
+	/**
+	 * @return the arraySortiesInterieure
+	 */
+	public List<Out> getArraySortiesInterieure() {
+		return arraySortiesInterieure;
+	}
+
+	/**
+	 * @return the arrayEntreesInterieure
+	 */
+	public List<In> getArrayEntreesInterieure() {
+		return arrayEntreesInterieure;
+	}
 	// ***********************************************
 	// Methodes implémentées issuent de l'heritage //
 	// **********************************************
