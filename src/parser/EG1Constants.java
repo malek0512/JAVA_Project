@@ -40,9 +40,9 @@ public interface EG1Constants {
     "\"(\"",
     "\"#\"",
     "\",\"",
-    "\")\"",
-    "\"composite\"",
-    "\"circuit\"",
+    "\")>\"",
+    "\"circuit \"",
+    "\";\"",
   };
 
 }

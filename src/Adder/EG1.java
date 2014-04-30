@@ -7,13 +7,12 @@ public class EG1 implements EG1Constants {
     EG1 parser = new EG1(System.in);
     System.out.println("Reading from standard input...");
     System.out.print("Enter an expression like \u005c"1+(2+3)*4;\u005c" :");
-    System.out.println(parser.Start());
+    System.out.println(parser.Start(0));
   }
 
-  final public int Start() throws ParseException, NumberFormatException {
+  final public int Start(int i) throws ParseException, NumberFormatException {
   Token t;
-  int i;
-  int value;
+//  int i;  int value;
     t = jj_consume_token(NUMBER);
     i = Integer.parseInt(t.image);
     value = i;

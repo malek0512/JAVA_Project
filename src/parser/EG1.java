@@ -33,15 +33,15 @@ private static $Composant which_composant(String name, int num){
     EG1 parser = new EG1(System.in);
     System.out.println("Entrer un circuit :" );
     Ferme circuit = DEF_CIRCUIT();
-    System.out.println(circuit.toString());
+    System.out.println(circuit.toDebug());
   }
 
-  static final public Ferme CIRCUIT() throws ParseException {
+  static final public Ferme CIRCUIT(Ferme res) throws ParseException {
         Token numt, numSt,numBt,numSBt,namt;
         int nbS = 0;
         int num, numS,numB,numSB;
         String name;
-        Ferme res = new Ferme();
+//	Ferme res = new Ferme();
         $Composant comp;
     label_1:
     while (true) {
@@ -102,9 +102,9 @@ private static $Composant which_composant(String name, int num){
                                   numSB = Integer.parseInt(numSBt.image);
                                   comp = which_composant(name,num);
                                   nbS++;                                                // Je ne vois pas a quoi sert cette variable
-                                  comp.addSortie(numS,numB,numSB);
+                                  comp.addSortie(numS-1,numB-1,numSB-1);
                                                                                     // Il faut qu'on ajoute une base de donnée pour sauvegarder, la donnée de connexion, car le composant auquel on souhaite le relier n'existe peut etre pas
-                              res.addComposant(comp);   // Obligatoirement ici, car dans le cas d'un Epsilon on ajoute null
+                              res.addComposant(comp);   // Obligatoirement ici, car dans le cas d'un Epsilon on ajouterais null
 
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case 15:
@@ -117,7 +117,6 @@ private static $Composant which_composant(String name, int num){
         }
         jj_consume_token(16);
       }
-      jj_consume_token(11);
     }
          {if (true) return res;}
     throw new Error("Missing return statement in function");
@@ -132,7 +131,7 @@ private static $Composant which_composant(String name, int num){
     case 17:
       jj_consume_token(17);
       namet = jj_consume_token(ID);
-                  //compo = COMPOSITE(); A faire
+                  circuit = CIRCUIT(circuit); //Je pense qu'on le lui passera en parametre, sinon on redescent les ligne cu-dessus, en dessous
                   name = namet.image;
                   circuit.setNom(name);
       break;
@@ -140,18 +139,7 @@ private static $Composant which_composant(String name, int num){
       jj_la1[5] = jj_gen;
       ;
     }
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 18:
-      jj_consume_token(18);
-      namet = jj_consume_token(ID);
-                  circuit = CIRCUIT(); //Je pense qu'on le lui passera en parametre, sinon on redescent les ligne cu-dessus, en dessous
-                  name = namet.image;
-                  circuit.setNom(name);
-      break;
-    default:
-      jj_la1[6] = jj_gen;
-      ;
-    }
+    jj_consume_token(18);
          {if (true) return circuit;}
     throw new Error("Missing return statement in function");
   }
@@ -166,13 +154,13 @@ private static $Composant which_composant(String name, int num){
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[7];
+  static final private int[] jj_la1 = new int[6];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x200,0x800,0x1000,0x20,0x8000,0x20000,0x40000,};
+      jj_la1_0 = new int[] {0x200,0x800,0x1000,0x20,0x8000,0x20000,};
    }
 
   /** Constructor with InputStream. */
@@ -193,7 +181,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -207,7 +195,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -224,7 +212,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -234,7 +222,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -250,7 +238,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -259,7 +247,7 @@ private static $Composant which_composant(String name, int num){
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -315,7 +303,7 @@ private static $Composant which_composant(String name, int num){
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 6; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
