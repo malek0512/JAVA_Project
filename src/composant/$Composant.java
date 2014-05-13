@@ -2,6 +2,7 @@ package composant;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -55,19 +56,10 @@ import port.Out;
 /**
  * invariant :nbEntrees + nbSorties > 0
  */
-class Couple
-{
-    public int x;
-    public int y;
 
-    public Couple(int x, int y)
-    {
-         this.x = x;
-         this.y = y;
-    }
-}
 public abstract class $Composant implements Comparable<$Composant> {
 
+	
 	// Attributs
 	protected List<Out> arraySorties;
 	protected List<In> arrayEntrees;
@@ -80,7 +72,8 @@ public abstract class $Composant implements Comparable<$Composant> {
 	public enum couleur {BLANC,GRIS,NOIR};
 	protected couleur c;
 	protected int debut,fin;
-	protected List<Couple> memoireSortie;
+	protected List<List<Couple>> memoireSortie;
+
 
 	public $Composant(String nom, int numero, int nbEntreeMax, int nbSortieMax) {
 		super();
@@ -92,7 +85,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 		this.nbSortieMax = nbSortieMax;
 		arraySorties = new ArrayList<Out>(this.nbSortieMax); //Attention erreur possible
 		arrayEntrees = new ArrayList<In>(this.nbEntreeMax);
-		memoireSortie = new ArrayList<Couple>(this.nbSortieMax);
+		memoireSortie = new ArrayList<List<Couple>>(this.nbSortieMax);
 		for (int i = 0; i < nbEntreeMax; i++) {
 			arrayEntrees.add(new In(this));
 			arrayEntrees.get(i).setNumero(i);
@@ -100,6 +93,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 		for (int i = 0; i < nbSortieMax; i++) {
 			arraySorties.add(new Out());
 			arraySorties.get(i).setNumero(i);
+			memoireSortie.add(i, new LinkedList<Couple>());
 		}
 	}
 
@@ -284,6 +278,15 @@ public abstract class $Composant implements Comparable<$Composant> {
 	 * Mémorise la connexion sans auncune connexion au composant
 	 */
 	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
-		memoireSortie.add(numeroSortie, new Couple(numeroComposant,numeroEntreeComposant));
+		memoireSortie.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
+	}	
+	
+	/**
+	 * @return the memoireSortie
+	 */
+	public List<List<Couple>> getMemoireSortie() {
+		return memoireSortie;
 	}
+	
+	
 }

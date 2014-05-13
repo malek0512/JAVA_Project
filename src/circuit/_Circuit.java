@@ -16,6 +16,7 @@ public interface _Circuit {
 //	public int nbPortEntreeLibre();
 //	public int nbPortSortieLibre();
 	
+	void connectAllFromList();
 	
 	
 }
