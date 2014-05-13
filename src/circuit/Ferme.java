@@ -26,31 +26,46 @@ public class Ferme implements _Circuit {
 	protected List<$Generateur> listGenerateur;
 	protected List<$Composant> listComposant;
 	protected List<$Recepteur> listRecepteur;
-	protected List<List<Couple>> memoireSortie;
+//	protected Map<Integer,List<Couple>> memoireSortie;
 	private String Nom;
 	
 	public Ferme(){
 		listGenerateur = new LinkedList<$Generateur>();
 		listComposant = new LinkedList<$Composant>();  
 		listRecepteur = new LinkedList<$Recepteur>();
-		memoireSortie = new LinkedList<List<Couple>>();
+//		memoireSortie = new HashMap<Integer,List<Couple>>();
 	}
 	
-	
+	/**
+	 * @require $Composant.getNumero() unique  
+	 */
 	public void addGenerateur ($Generateur g){
 		if (! listGenerateur.contains(g)){
 			listGenerateur.add(g);
-			memoireSortie.add(g);
+//			if ( ! memoireSortie.containsKey(g.getNumero()))
+//				memoireSortie.put(g.getNumero(), new LinkedList<Couple>());
+//			else 
+//				throw new Require("Attention Numero déja attribué")  ;
 		}
 	}
 	
 	public void addRecepteur ($Recepteur r){
-		if (! listRecepteur.contains(r))
+		if (! listRecepteur.contains(r)){
 			listRecepteur.add(r);
+//			if ( ! memoireSortie.containsKey(r.getNumero()))
+//				memoireSortie.put(r.getNumero(), new LinkedList<Couple>());
+//			else 
+//				throw new Require("Attention Numero déja attribué")  ;
+		}
 	}
 	public void addComposant ($Composant c){
-		if (! listComposant.contains(c))
+		if (! listComposant.contains(c)){
 			listComposant.add(c);
+//			if ( ! memoireSortie.containsKey(c.getNumero()))
+//				memoireSortie.put(c.getNumero(), new LinkedList<Couple>());
+//			else 
+//				throw new Require("Attention Numero déja attribué")  ;
+		}
 	}	
 	
 	public void connect($Composant A, int noPortSortie, $Composant B, int noPortEntree){
@@ -146,14 +161,14 @@ public class Ferme implements _Circuit {
 		Nom = nom;
 	}
 
-	/**
-	 * Mémorise la connexion sans auncune connexion au composant
-	 */
-	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
-		if (!memoireSortie.)
-			memoireSortie.add(numeroSortie, new LinkedList<Couple>());
-			memoireSortie.get(numeroSortie).add(new composant.Couple(numeroComposant,numeroEntreeComposant));
-	}
+//	/**
+//	 * Mémorise la connexion sans auncune connexion au composant
+//	 */
+//	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
+//		if (memoireSortie.)
+//			memoireSortie.add(numeroSortie, new LinkedList<Couple>());
+//			memoireSortie.get(numeroSortie).add(new composant.Couple(numeroComposant,numeroEntreeComposant));
+//	}
 	
 	private $Composant findComposant(int numero){
 		for(int i=0;i<listGenerateur.size();i++){
@@ -179,9 +194,35 @@ public class Ferme implements _Circuit {
 		List memoire, sortie;
 		Couple c; 
 		
-		// COnnecte les composant entre eux
-		for(int i=0; i<memoireSortie.size(); i++){
-			comps = findComposant(i);
+		// COnnecte les composant entre eux		
+		for(int i=0;i<listGenerateur.size();i++){
+			comps = listGenerateur.get(i);;
+			memoire = comps.getMemoireSortie();
+			for(int j=0; j<comps.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					compi = findComposant(c.x);
+					connect(comps, j, compi, c.y);
+				}
+			}
+		}
+		
+		for(int i=0;i<listComposant.size();i++){
+			comps = listComposant.get(i);;
+			memoire = comps.getMemoireSortie();
+			for(int j=0; j<comps.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					compi = findComposant(c.x);
+					connect(comps, j, compi, c.y);
+				}
+			}
+		}
+		
+		for(int i=0;i<listRecepteur.size();i++){
+			comps = listRecepteur.get(i);;
 			memoire = comps.getMemoireSortie();
 			for(int j=0; j<comps.nbSorties();j++){
 				sortie = (List) memoire.get(j);
