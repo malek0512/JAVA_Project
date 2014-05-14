@@ -33,7 +33,7 @@ private static $Composant which_composant(String name, int num){
     EG1 parser = new EG1(System.in);
     System.out.println("Entrer un circuit :" );
     Ferme circuit = DEF_CIRCUIT();
-    System.out.println(circuit.toDebug());
+    System.out.println(circuit.toString2());
   }
 
   static final public Ferme CIRCUIT(Ferme res) throws ParseException {
@@ -41,7 +41,6 @@ private static $Composant which_composant(String name, int num){
         int nbS = 0;
         int num, numS,numB,numSB;
         String name;
-//	Ferme res = new Ferme();
         $Composant comp;
     label_1:
     while (true) {
@@ -57,71 +56,121 @@ private static $Composant which_composant(String name, int num){
       numt = jj_consume_token(NUM);
       jj_consume_token(10);
       namt = jj_consume_token(ID);
+                        num  = Integer.parseInt(numt.image); //numero du composant
+                        name = namt.image; //nom du composant
+                        comp = which_composant(name,num);//type du composant
+
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 11:
         jj_consume_token(11);
-                         num  = Integer.parseInt(numt.image);
-                         name = namt.image;
-                         res.addComposant(new Led(name,num));
+                         res.addComposant(comp);
         break;
       default:
         jj_la1[1] = jj_gen;
         ;
       }
-      label_2:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 12:
-          ;
-          break;
-        default:
-          jj_la1[2] = jj_gen;
-          break label_2;
-        }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 12:
         jj_consume_token(12);
         numSt = jj_consume_token(NUM);
+                         numS = Integer.parseInt(numSt.image);
         jj_consume_token(13);
-        label_3:
+        label_2:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case NUM:
             ;
             break;
           default:
-            jj_la1[3] = jj_gen;
-            break label_3;
+            jj_la1[2] = jj_gen;
+            break label_2;
           }
           //* pour chaque composant
                                           numBt = jj_consume_token(NUM);
           jj_consume_token(14);
           numSBt = jj_consume_token(NUM);
-                                  num  = Integer.parseInt(numt.image);
-                                  name = namt.image;
-                                  numS = Integer.parseInt(numSt.image);
-                                  numB = Integer.parseInt(numBt.image);
-                                  numSB = Integer.parseInt(numSBt.image);
-                                  comp = which_composant(name,num);
-                                  nbS++;                                                // Je ne vois pas a quoi sert cette variable
-                                  comp.addSortie(numS-1,numB-1,numSB-1);
-                                                                                    // Il faut qu'on ajoute une base de donnée pour sauvegarder, la donnée de connexion, car le composant auquel on souhaite le relier n'existe peut etre pas
-                              res.addComposant(comp);   // Obligatoirement ici, car dans le cas d'un Epsilon on ajouterais null
+                                  numB = Integer.parseInt(numBt.image); //numero du composant dest
+                                  numSB = Integer.parseInt(numSBt.image); //numero du port du composant dest
+                                  comp.addSortie(numS-1,numB-1,numSB-1); //ajout de la sortie au composant		
 
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case 15:
             jj_consume_token(15);
             break;
           default:
-            jj_la1[4] = jj_gen;
+            jj_la1[3] = jj_gen;
             ;
           }
         }
         jj_consume_token(16);
+                          res.addComposant(comp);//ajout du composant
+
+        break;
+      default:
+        jj_la1[4] = jj_gen;
+        ;
       }
     }
          {if (true) return res;}
     throw new Error("Missing return statement in function");
   }
 
+/*
+Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
+{
+	Token numt, numSt,numBt,numSBt,namt;
+	int nbS = 0;
+	int num, numS,numB,numSB; //num : numero du composant, numS : numero de sortie du composant, meme prefixe avec B : composant cible
+	String name;
+	Composite res;
+	$Composant comp;
+}
+{
+(
+		"<" numt=<NUM> //numero composant token
+		"|" namt=<ID> //nom du composant token
+		{//ajout du composant a la liste des composant
+		num  = Integer.parseInt(numt.image);
+		name = namt.image;
+		}
+		//test si pas de sortie
+		(
+		    ">"
+			{comp = new Led(name,num);//maj dans la liste
+			res.addComposant(comp,num);
+			}
+			//Pas de donne a metre dans lCD
+			//Ici il n'existe qu'un seul type de recepteur, sinon nous aurons qu'a faire un switch nam 
+		)?
+		
+		//au moins une sortie
+		(//*
+			{
+			comp = which_composant(name,num,LCF);
+			res.addComposant(comp,num);//ajoute le composant a l'emplacement d'index num, composant encore inconnue
+			}
+			"->#"
+			numSt=<NUM> //numero de sortie
+			{numS = Integer.parseInt(numSt.image);}//maj du numero de sortie
+			"("
+			(//* pour chaque composant
+				numBt=<NUM> "#" numSBt=<NUM> // numero du composant ; numero de sortie
+				
+				{
+				  numB = Integer.parseInt(numBt.image);
+				  numSB = Integer.parseInt(numSBt.image);
+				  comp.addSortie(numS,numB,numSB);
+				}
+				(",")?
+			)*
+			")>"
+		
+		)*
+)*
+
+{lCF.add(res);}
+}	
+*/
   static final public Ferme DEF_CIRCUIT() throws ParseException {
   Token namet;
   String name;
@@ -160,7 +209,7 @@ private static $Composant which_composant(String name, int num){
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x200,0x800,0x1000,0x20,0x8000,0x20000,};
+      jj_la1_0 = new int[] {0x200,0x800,0x20,0x8000,0x1000,0x20000,};
    }
 
   /** Constructor with InputStream. */

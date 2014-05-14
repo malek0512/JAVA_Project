@@ -49,12 +49,12 @@ public abstract class $Transformateur extends $Composant {
 	 */
 	public String toString2(){
 		String res = new String("<" + Numero + "|" + Nom + "(" + nbEntreeMax + "," + nbSortieMax + ")" + infoComplementaire() + "->");
-		res.concat(arraySorties.get(0).toString());
+		res = res.concat(arraySorties.get(0).toString2());
 		for (int i=1; i<arraySorties.size(); i++)
 		{
-			res.concat("\n\t->"+ arraySorties.get(i).toString());
+			res = res.concat("\n\t->"+ arraySorties.get(i).toString2());
 		}
-		res.concat(">");
+		res = res.concat(">");
 		return res;
 	}
 }

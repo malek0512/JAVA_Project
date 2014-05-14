@@ -15,12 +15,12 @@ public class CircuitTestUnitaire {
 		Circuit = new Ferme();
 		Circuit.addComposant(c);
 		for(int i=0; i<c.nbEntrees();i++){
-			Itr G = new Itr("Iter",i,niveau.Bas);
+			Itr G = new Itr("Iter",i+1,niveau.Bas);
 			Circuit.listGenerateur.add(G);
 			Circuit.connect(G, 0, c, i);
 		}
 		for(int i=0; i<c.nbSorties();i++){
-			Led L = new Led("Led",i);
+			Led L = new Led("Led",i+1+c.nbEntrees());
 			Circuit.listRecepteur.add(L);
 			Circuit.connect(c, i, L, 0);
 		}
@@ -49,7 +49,7 @@ public class CircuitTestUnitaire {
 					((Itr) Circuit.listGenerateur.get(j)).setNiveau(etat);
 			}
 			Circuit.execute();
-			System.out.println(Circuit.toString());
+			System.out.println(Circuit.toString2());
 		}
 	}
 	

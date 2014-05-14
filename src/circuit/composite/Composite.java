@@ -277,6 +277,10 @@ public class Composite extends $Composant implements _Ouvert {
 			res = res + ListComposant.get(i).toString() + "\n";
 		return res;
 	}
+	public String toString2()
+	{
+		return "fonction a faire :/";
+	}
 	public String toDebug() {
 		String res = "\n Composite PE et PS: \n" + "InIn :" + arrayEntrees.toString() + "\n"+ arraySortiesInterieure.toString();
 		res += "\n OutOut :" + arraySorties.toString()+ "\n"+arrayEntreesInterieure.toString();

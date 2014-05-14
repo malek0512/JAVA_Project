@@ -3,6 +3,7 @@ package circuit;
 import java.util.LinkedList;
 import java.util.List;
 
+import circuit.composite.Composite;
 import port.In;
 import jus.util.assertion.*;
 import composant.$Composant;
@@ -43,7 +44,11 @@ public class Ferme implements _Circuit {
 			listRecepteur.add(r);
 	}
 	public void addComposant ($Composant c){
-		if (! listComposant.contains(c))
+		if (c instanceof $Recepteur)
+			this.addRecepteur(($Recepteur) c);
+		else if (c instanceof $Generateur)
+			this.addGenerateur(($Generateur) c);
+		else if (! listComposant.contains(c))
 			listComposant.add(c);
 	}	
 	
@@ -119,6 +124,33 @@ public class Ferme implements _Circuit {
 			res += listRecepteur.get(i).toString() + "\n";
 		return res;
 	}
+	
+	public String toString2(){
+		Composite comp;
+		composant.transformateur.$Transformateur tr;
+		String res = "\n";
+		for(int i=0;i<listGenerateur.size();i++)
+			res += listGenerateur.get(i).toString2() + "\n";
+		res += "\n";
+		for(int i=0;i<listComposant.size();i++)
+		{
+			if (listComposant.get(i) instanceof Composite)
+				{
+				comp = (Composite) (listComposant.get(i));
+				res += comp.toString2() + "\n";
+				}
+			else if (listComposant.get(i) instanceof composant.transformateur.$Transformateur)
+			{
+				tr = (composant.transformateur.$Transformateur) listComposant.get(i);
+				res += tr.toString2() + "\n";
+			}
+		}
+		res += "\n";
+		for(int i=0;i<listRecepteur.size();i++)
+			res += listRecepteur.get(i).toString2() + "\n";
+		return res;
+	}
+	
 	
 	public String toDebug(){
 		String res = "\n";

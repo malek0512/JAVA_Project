@@ -236,7 +236,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 	 * @author Alex
 	 */
 	protected String infoComplementaire(){ // depend de chaque composant
-		return null;
+		return "";
 	}
 	/**
 	 * @return the debut

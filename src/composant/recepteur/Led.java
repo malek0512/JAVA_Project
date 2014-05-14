@@ -33,5 +33,9 @@ public class Led extends $Recepteur {
 	}
 
 
+	public String infoComplementaire()
+	{
+		return "{" + this.value.toString() + "}";
+	}
 
 }

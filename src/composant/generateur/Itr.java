@@ -28,4 +28,8 @@ public class Itr extends $Generateur {
 		this.spreadNiveau();
 	}
 	
+	public String infoComplementaire()
+	{
+		return "{" + value.toString() + "}";
+	}
 }

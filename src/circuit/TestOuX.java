@@ -68,6 +68,7 @@ public class TestOuX {
 	
 	public static void main (String [] args) {
 		tester();
+		System.out.println();
 	}
 
 }
