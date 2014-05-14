@@ -1,10 +1,7 @@
 package circuit.composite;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,31 +12,21 @@ import port.Out;
 import composant.$Composant;
 import composant.Couple;
 
-/*
-
-void connect
-- pour connecter un composant a un autre composant
-- on apelle connect d'un seul composant qui recoit un nouveau port d'entree
-
-void deconnecter
-- pour deconcecter un composant a un autre composant
-
-*/
 public class Composite extends $Composant implements _Ouvert {
 	// Attributs 
-	private List<$Composant> ListComposant;
+	private List<$Composant> ListComposant; //liste des composant
 	private int date =0;
-	private Boolean executable = true;
-	private List<In> arrayEntreesInterieure;
-	private List<Out> arraySortiesInterieure;
+	private Boolean executable = true; // execution == false ssi il existe un composant appartenant a la liste des composant, ne possédent pas de sorties 
+	private List<In> arrayEntreesInterieure; //list des port in pour les composant interne
+	private List<Out> arraySortiesInterieure; //list des port out pour les composant interne 
 	private List<List<Couple>> memoireSortiesInterieur;
 	
 	/**
-	 * Constructeur Composite
-	 * @param nom
-	 * @param numero
-	 * @param nbEntreeMax
-	 * @param nbSortieMax
+	 * Constructeur Composite avec nom, numero, nbEntre et nbSortie
+	 * @param nom : nom du composite
+	 * @param numero : numero du composite
+	 * @param nbEntreeMax : nombre d'entre
+	 * @param nbSortieMax : nombre de sortie
 	 */
 	public Composite (String nom, int numero, int nbEntreeMax, int nbSortieMax){
 		super(nom,numero,nbEntreeMax,nbSortieMax);
@@ -137,6 +124,11 @@ public class Composite extends $Composant implements _Ouvert {
 		}
 	}
 	
+	/**
+	 *Fonction auxiliaire du tri topologique
+	 * @param Un Composant A
+	 * @return la liste des composants adjacent au composant A
+	 */
 	private LinkedList<$Composant> adja ($Composant A){
 		LinkedList<$Composant> res = new LinkedList<$Composant>();
 		$Composant T;
@@ -151,7 +143,7 @@ public class Composite extends $Composant implements _Ouvert {
 	}
 	
 	/**
-	 * implemente le Parcours en Profondeur d'un graphe
+	 * Implemente le Parcours en Profondeur d'un graphe
 	 * @param A
 	 * @param PortS
 	 */
@@ -168,6 +160,12 @@ public class Composite extends $Composant implements _Ouvert {
 
 	}
 	
+	/**
+	 * Implemente le Parcours en Profondeur d'un graphe
+	 * @param Composite G qui constitue le graphe
+	 * @param $Composant u qui reresente le sommet par lequel on effectue la descente dans le graphe
+	 */
+
 	private void Visite_PP(Composite G,$Composant u){
 		List<$Composant> adj;
 		$Composant v;
@@ -176,7 +174,9 @@ public class Composite extends $Composant implements _Ouvert {
 		u.setDebut(date);
 		
 		adj = adja(u);
-		if (adj.size()==0)
+		
+		// S'il existe un composant avec aucune sortie hormis un recepteur, alors le composite n'est pas executable 
+		if (adj.size()==0 && !(u instanceof composant.recepteur.$Recepteur))
 			executable = executable && false;
 		
 		for (int i=0; i<adj.size();i++){
@@ -191,6 +191,7 @@ public class Composite extends $Composant implements _Ouvert {
 	}
 	
 	/**
+	 * Effectue le tri topoliguqe des composants pour une execution plus rapide
 	 * @ensure listComposant est trié selon l'ordre topologique d'execution 
 	 */
 	protected void triTopologique(){
@@ -198,16 +199,21 @@ public class Composite extends $Composant implements _Ouvert {
 		Collections.sort(ListComposant);
 	}
 	
-	
+	/**
+	 * Vraie si le composite est executable
+	 * @return True ssi le composite est executable 
+	 */
 	public boolean estExecutable(){
 		triTopologique();
-		return true;//executable;
+		return executable;
 	}
+	
 	// ***********************************************
 	// Accesseurs et Getteurs						//
 	// **********************************************
 		
 	/**
+	 * renvoie le nombre de composant
 	 * @return Nombre de composant
 	 */
 	public int nbComposant(){
@@ -216,6 +222,7 @@ public class Composite extends $Composant implements _Ouvert {
 
 	/**
 	 *  Ajoute un composant a la liste des composants, sans connection
+	 *  @ensure : le composant fait partie du composite
 	 */
 	public void addComposant($Composant composant) {
 		ListComposant.add(composant);
@@ -227,6 +234,7 @@ public class Composite extends $Composant implements _Ouvert {
 	public void ajoutListComposants(List<$Composant> l) {
 		ListComposant.addAll(l);
 	}
+	
 	/**
 	 * @return the listComposant
 	 */
@@ -255,19 +263,29 @@ public class Composite extends $Composant implements _Ouvert {
 	public void addSortieInterieur(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
 		memoireSortiesInterieur.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
 	}
+	
 	// ***********************************************
 	// Methodes implémentées issuent de l'heritage //
 	// **********************************************
 
+	/**
+	 * renvoie le nombre d'entrée libre
+	 * @return le nombre d'entrée libre 
+	 */
 	public int nbPortEntreeLibre() {
 		return nbEntreeMax - nbEntrees();
 	}
-
+	
+	/**
+	 * renvoie le nombre de sortie libre
+	 * @return le nombre de sortie libre 
+	 */
 	public int nbPortSortieLibre() {
 		return nbSortieMax - nbSorties();
 	}
 
 	/**
+	 * execute le composite
 	 * @ensure l'execution de chaque composant selon l'ordre topologique
 	 */
 	public void execute() {	
@@ -283,12 +301,19 @@ public class Composite extends $Composant implements _Ouvert {
 		}
 	}
 
+	/**
+	 * retourne les infos du composite
+	 */
 	public String toString() {
 		String res = "Voici la liste des composant du composite :\n";
 		for(int i=0; i<nbComposant();i++)
 			res = res + ListComposant.get(i).toString() + "\n";
 		return res;
 	}
+	
+	/**
+	 * retourne les infos du composite selon la grammaire
+	 */
 	public String toString2(){
 		composant.transformateur.$Transformateur tr;
 		composant.generateur.$Generateur ge;
@@ -316,18 +341,23 @@ public class Composite extends $Composant implements _Ouvert {
 				res += ((Composite) this.ListComposant.get(i)).toString2() + "\n";
 			}
 		}
+		
 		res+= "[";
 		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
 		{
-			res+= this.arrayEntrees.get(i).toString2();
+			res+= "E" + this.arrayEntrees.get(i).toString2() + ";";
 		}
 		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
 		{	
-			res+= this.arraySorties.get(i).toString2();
+			res+= "S" + this.arraySorties.get(i).toString2() + ";";
 		}
 		res+= "]\n";
 		return res;
 	}
+	
+	/**
+	 * retourne les infos pour le debuggage
+	 */
 	public String toDebug() {
 		String res = "\n Composite PE et PS: \n" + "InIn :" + arrayEntrees.toString() + "\n"+ arraySortiesInterieure.toString();
 		res += "\n OutOut :" + arraySorties.toString()+ "\n"+arrayEntreesInterieure.toString();
@@ -339,6 +369,11 @@ public class Composite extends $Composant implements _Ouvert {
 	}
 
 
+	/**
+	 * renvoie le composant dont le numero est donnée
+	 * @param numero numero du composant chercher
+	 * @return le composant de numero numero, null il n'est pas dans le composite
+	 */
 	private $Composant findComposant(int numero){
 		for(int i=0;i<ListComposant.size();i++){
 			if (ListComposant.get(i).getNumero() == numero)
@@ -347,6 +382,10 @@ public class Composite extends $Composant implements _Ouvert {
 		return null;
 		
 	}
+	
+	/**
+	 * Connecte tout les composantselon la liste mémoire
+	 */
 	public void connectAllFromList() {
 		$Composant comp, compi;
 		List memoire, sortie;

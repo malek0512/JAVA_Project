@@ -1,16 +1,5 @@
 package port;
 
-/*
- attribut :
- un nom
- un numero
- bool value du composant
- 	-histoire d'eviter de repeter le calcul :d
- 
- methode :
- tostring alias donne la "grammaire"
- */
-
 abstract class $Port {
 
 	/* Attributs */
@@ -24,26 +13,7 @@ abstract class $Port {
 		Numero=0;
 		Valide=false;
 	}
-	/**
-	 * construit le port avec le numero donné en argument
-	 * @author Alex
-	 */
-	public $Port(int numero){
-		this.Numero=numero;
-		this.Valide=false;
-	}
 	
-	/**
-	 * construit le port avec le numero donné en argument et la value
-	 * @ensure getValide == true //normal vue qu'il possede une valeur desormais
-	 * @author Alex
-	 */
-	public $Port(int numero, boolean value){
-		this.Numero=numero;
-		this.Valide=true;
-		this.Value=value;
-		
-	}
 	
 	/* ** Accesseurs et Getteur ** */ 
 	/**
@@ -55,7 +25,8 @@ abstract class $Port {
 	}
 
 	/**
-	 * @param valide the valide to set
+	 * modifie la validiter du port
+	 * @param valide : la validiter du port
 	 */
 	public void setValide(boolean valide) {
 		Valide = valide;
@@ -70,6 +41,7 @@ abstract class $Port {
 	}
 
 	/**
+	 * renvoiela valeur
 	 * @return the value
 	 */
 	public boolean getValue() {
@@ -78,6 +50,7 @@ abstract class $Port {
 	}
 	
 	/**
+	 * renvoie le numero du port
 	 * @return the numero
 	 */
 	public int getNumero() {
@@ -85,6 +58,7 @@ abstract class $Port {
 	}
 
 	/**
+	 * modifie le numero du port
 	 * @param numero the numero to set
 	 */
 	public void setNumero(int numero) {

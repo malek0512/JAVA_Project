@@ -16,9 +16,9 @@ import circuit.Ferme;
 import circuit.composite.Composite;
 
 public class EG1{
-private static $Composant which_composant(String name, int num){
+private static $Composant which_composant(String name, int num, String infC){
   switch (name){
- 	case "Itr" : return ($Composant) new Itr(name,num,niveau.Bas); 
+ 	case "Itr" : return ($Composant) new Itr(name,num,infC); 
  	case "Vcc" : return ($Composant) new Vcc(name,num); 
  	case "Gnd" : return ($Composant) new Ground(name,num); 
  	case "Led" : return ($Composant) new Led(name,num); 
@@ -31,7 +31,11 @@ private static $Composant which_composant(String name, int num){
 	}
 }  public static void main(String args []) throws ParseException  {    EG1 parser = new EG1(System.in);
     System.out.println("Entrer un circuit :" );
-    Ferme circuit = DEF_CIRCUIT();    System.out.println(circuit.toString2());  }}PARSER_END(EG1)SKIP :{  " "| "\r"| "\t"| "\n"}
+    Ferme circuit = DEF_CIRCUIT();
+    circuit.connectAllFromList();
+    circuit.execute();
+    System.out.println(circuit.toString2());
+  }}PARSER_END(EG1)SKIP :{  " "| "\r"| "\t"| "\n"}
 
 //Attention comme en caml, le match des token se fait dans de maniere sequentielle
 //Ne mettre aucun apres ID
@@ -39,17 +43,26 @@ private static $Composant which_composant(String name, int num){
 TOKEN : /* OPERATORS */{  < NUM: ( <DIGIT> )+ >
 | < ID: <LETTER> (<DIGIT> | <LETTER>)+ >
 | < #LETTER: ["a"-"z","A"-"Z"] >
-| < #DIGIT: ["0" - "9"] > }Ferme CIRCUIT(Ferme res) : {	Token numt, numSt,numBt,numSBt,namt;	int nbS = 0;	int num, numS,numB,numSB;	String name;	$Composant comp;}{	(		"<" numt=<NUM> 		"|" namt=<ID>
+| < #DIGIT: ["0" - "9"] > }Ferme CIRCUIT(Ferme res) : {	Token numt, numSt,numBt,numSBt,namt,infCT;	int nbS = 0;	int num, numS,numB,numSB;	String name;
+	String infC;	$Composant comp;}{	(		"<" numt=<NUM> 		"|" namt=<ID>
+		{infC="";}
+		(//info complementaire		"{" infCT =<ID> "}"
+		{infC = infCT.image;}		)?	
 		{			num  = Integer.parseInt(numt.image); //numero du composant
 			name = namt.image; //nom du composant
-			comp = which_composant(name,num);//type du composant
-		}		(//pas de sortie		    ">"			{res.addComposant(comp);}		)?							//au moins une sortie		(//*
+			comp = which_composant(name,num,infC);//type du composant
+		}		(//pas de sortie		    ">"		)?							//au moins une sortie		(//*
 			"->#"			numSt=<NUM>
 			{numS = Integer.parseInt(numSt.image);}//numero de sorti			"("			(//* pour chaque composant				numBt=<NUM> "#" numSBt=<NUM>
 				{
-				  numB = Integer.parseInt(numBt.image); //numero du composant dest				  numSB = Integer.parseInt(numSBt.image); //numero du port du composant dest				  comp.addSortie(numS-1,numB-1,numSB-1); //ajout de la sortie au composant						}				(",")?			)*			")>"
-			{			  res.addComposant(comp);//ajout du composant			}		)?	)*
-	//fini de lire la liste des composant du circuit	{return res;}}
+				  numB = Integer.parseInt(numBt.image); //numero du composant dest				  numSB = Integer.parseInt(numSBt.image); //numero du port du composant dest				  comp.addSortie(numS-1,numB,numSB-1); //ajout de la sortie au composant
+				}				(",")?			)*			")>"
+		)?
+		{
+			res.addComposant(comp);//ajout du composant
+		}
+			)*
+	//fini de lire la liste des composant du circuit		{return res;}}
 /*
 Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
 {
@@ -129,5 +142,5 @@ Ferme DEF_CIRCUIT() :
 	)?
 		";" //Ajouter pour qu'il reconnaisse que c'est la fin du circuit
 	
-	{return circuit;}
+	{circuit.connectAllFromList(); return circuit;}
 }

@@ -1,7 +1,5 @@
 package composant.generateur;
 
-import java.util.Iterator;
-
 import composant.$Composant;
 
 
@@ -15,7 +13,7 @@ import composant.$Composant;
  n'a aucun port d'entre
 
  */
-public abstract class $Generateur extends $Composant implements Iterable<Void> {
+public abstract class $Generateur extends $Composant {
 
 	/**
 	 * Constructeur d'un generateur
@@ -33,15 +31,6 @@ public abstract class $Generateur extends $Composant implements Iterable<Void> {
 		super(nom,idComposant,0,nbSortieMax);
 	}
 
-	public Iterator<Void> iterator() {
-		Iterator<Void> elems = iterator();
-
-//		for (niveau etat : niveau.values())
-//			this.value = etat;
-        return elems ;
-	}
-
-
 	/**
 	* Propage la valeur du niveau (du PortS) aux composants qui lui sont reliés
 	*/
@@ -53,10 +42,16 @@ public abstract class $Generateur extends $Composant implements Iterable<Void> {
 		}
 	}
 
+	/**
+	 * retourne les infos du generateur
+	 */
 	public String toString() {
 		return "Generateur " + Nom + " N° " + Numero + " a l'etat " + getNiveau().toString();
 	}
 	
+	/**
+	 * retourne les infos du generateur selon la grammaire
+	 */
 	public String toString2(){
 		String res = new String("<" + Numero + "|" + Nom + "(0," + nbSortieMax + ")" + infoComplementaire() + "->");
 		res = res.concat(arraySorties.get(0).toString2());

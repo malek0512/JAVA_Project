@@ -11,6 +11,7 @@ public class Et extends $Transformateur {
  */
   public Et(String nom, int idComposant){ 
 		super(nom,idComposant,2,1);
+		this.value = niveau.Haut;
   }
 	
 	/**

@@ -32,6 +32,11 @@ public abstract class $Transformateur extends $Composant {
 	 */
 	public abstract void calcul();
 	
+	/**
+	 * execute l'action du transformateur si cela est possible, si tel est le cas, 
+	 * alors les composant qui sont connecter par les port de sortie de transformateur 
+	 * aurons leur valeur niveau mis a jour
+	 */
 	public void execute() {
 		calcul();
 		spreadNiveau();
@@ -40,12 +45,16 @@ public abstract class $Transformateur extends $Composant {
 				this.sortieList().get(0).connectall();
 		}
 	}
+	
+	/**
+	 * renvoie les information du composant
+	 */
 	public String toString(){
 		return "Transformateur " + Nom + " N° " + Numero + " est au niveau " + value.toString();
 	}
 	
 	/**
-	 * @author Alex
+	 * renvoie les information selon la grammaire
 	 */
 	public String toString2(){
 		String res = new String("<" + Numero + "|" + Nom + "(" + nbEntreeMax + "," + nbSortieMax + ")" + infoComplementaire() + "->");
