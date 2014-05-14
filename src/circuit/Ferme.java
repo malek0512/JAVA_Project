@@ -7,6 +7,7 @@ import circuit.composite.Composite;
 import port.In;
 import jus.util.assertion.*;
 import composant.$Composant;
+import composant.Couple;
 import composant.generateur.$Generateur;
 import composant.recepteur.$Recepteur;
 /*
@@ -20,28 +21,43 @@ Liste de composants
 	--Methode--
 
  */
+import composant.recepteur.Led;
 
 public class Ferme implements _Circuit {
 	protected List<$Generateur> listGenerateur;
 	protected List<$Composant> listComposant;
 	protected List<$Recepteur> listRecepteur;
+//	protected Map<Integer,List<Couple>> memoireSortie;
 	private String Nom;
 	
 	public Ferme(){
 		listGenerateur = new LinkedList<$Generateur>();
 		listComposant = new LinkedList<$Composant>();  
 		listRecepteur = new LinkedList<$Recepteur>();
+//		memoireSortie = new HashMap<Integer,List<Couple>>();
 	}
 	
-	
+	/**
+	 * @require $Composant.getNumero() unique  
+	 */
 	public void addGenerateur ($Generateur g){
-		if (! listGenerateur.contains(g))
+		if (! listGenerateur.contains(g)){
 			listGenerateur.add(g);
+//			if ( ! memoireSortie.containsKey(g.getNumero()))
+//				memoireSortie.put(g.getNumero(), new LinkedList<Couple>());
+//			else 
+//				throw new Require("Attention Numero déja attribué")  ;
+		}
 	}
 	
 	public void addRecepteur ($Recepteur r){
-		if (! listRecepteur.contains(r))
+		if (! listRecepteur.contains(r)){
 			listRecepteur.add(r);
+//			if ( ! memoireSortie.containsKey(r.getNumero()))
+//				memoireSortie.put(r.getNumero(), new LinkedList<Couple>());
+//			else 
+//				throw new Require("Attention Numero déja attribué")  ;
+		}
 	}
 	public void addComposant ($Composant c){
 		if (c instanceof $Recepteur)
@@ -49,7 +65,10 @@ public class Ferme implements _Circuit {
 		else if (c instanceof $Generateur)
 			this.addGenerateur(($Generateur) c);
 		else if (! listComposant.contains(c))
+		{
+			if (! listComposant.contains(c))
 			listComposant.add(c);
+		}
 	}	
 	
 	public void connect($Composant A, int noPortSortie, $Composant B, int noPortEntree){
@@ -170,5 +189,79 @@ public class Ferme implements _Circuit {
 	 */
 	public void setNom(String nom) {
 		Nom = nom;
+	}
+
+//	/**
+//	 * Mémorise la connexion sans auncune connexion au composant
+//	 */
+//	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
+//		if (memoireSortie.)
+//			memoireSortie.add(numeroSortie, new LinkedList<Couple>());
+//			memoireSortie.get(numeroSortie).add(new composant.Couple(numeroComposant,numeroEntreeComposant));
+//	}
+	
+	private $Composant findComposant(int numero){
+		for(int i=0;i<listGenerateur.size();i++){
+			if (listGenerateur.get(i).getNumero() == numero)
+				return listGenerateur.get(i);
+		}
+		
+		for(int i=0;i<listComposant.size();i++){
+			if (listComposant.get(i).getNumero() == numero)
+				return listComposant.get(i);
+		}
+		
+		for(int i=0;i<listRecepteur.size();i++){
+			if (listRecepteur.get(i).getNumero() == numero)
+				return listRecepteur.get(i);
+		}
+		// Si le numero de composant n'est dans aucune liste alors on retourne null
+		return null;
+		
+	}	
+	public void connectAllFromList() {
+		$Composant comps, compi;
+		List memoire, sortie;
+		Couple c; 
+		
+		// COnnecte les composant entre eux		
+		for(int i=0;i<listGenerateur.size();i++){
+			comps = listGenerateur.get(i);;
+			memoire = comps.getMemoireSortie();
+			for(int j=0; j<comps.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					compi = findComposant(c.x);
+					connect(comps, j, compi, c.y);
+				}
+			}
+		}
+		
+		for(int i=0;i<listComposant.size();i++){
+			comps = listComposant.get(i);;
+			memoire = comps.getMemoireSortie();
+			for(int j=0; j<comps.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					compi = findComposant(c.x);
+					connect(comps, j, compi, c.y);
+				}
+			}
+		}
+		
+		for(int i=0;i<listRecepteur.size();i++){
+			comps = listRecepteur.get(i);;
+			memoire = comps.getMemoireSortie();
+			for(int j=0; j<comps.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					compi = findComposant(c.x);
+					connect(comps, j, compi, c.y);
+				}
+			}
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import circuit._Ouvert;
 import port.In;
 import port.Out;
 import composant.$Composant;
+import composant.Couple;
 
 /*
 
@@ -32,6 +34,7 @@ public class Composite extends $Composant implements _Ouvert {
 	private Boolean executable = true;
 	private List<In> arrayEntreesInterieure;
 	private List<Out> arraySortiesInterieure;
+	private List<List<Couple>> memoireSortiesInterieur;
 	
 	/**
 	 * Constructeur Composite
@@ -45,6 +48,7 @@ public class Composite extends $Composant implements _Ouvert {
 		arraySortiesInterieure = new ArrayList<Out>(nbEntreeMax);
 		arrayEntreesInterieure = new ArrayList<In>(nbSortieMax);
 		ListComposant= new ArrayList<$Composant>();
+		memoireSortiesInterieur = new LinkedList<List<Couple>>();
 		
 		/* Creation d'un port d'entré interieur pour chaque port de sortie exterieur */
 		for (int i = 0; i < nbSortieMax; i++) {
@@ -57,6 +61,7 @@ public class Composite extends $Composant implements _Ouvert {
 		for (int i = 0; i < nbEntreeMax; i++) {
 			arraySortiesInterieure.add(new Out());
 			arraySortiesInterieure.get(i).setNumero(i);
+			memoireSortiesInterieur.add(new LinkedList<Couple>());
 		}
 //		spreadOutOutComposite();
 	}
@@ -137,7 +142,7 @@ public class Composite extends $Composant implements _Ouvert {
 	private LinkedList<$Composant> adja ($Composant A){
 		LinkedList<$Composant> res = new LinkedList<$Composant>();
 		$Composant T;
-		for (int i=0;i<nbSorties();i++){
+		for (int i=0;i<A.nbSorties();i++){
 			for(int j=0;j<A.sortieList().get(i).getListConnexion().size();j++){
 				T = A.sortieList().get(i).getListConnexion().get(j).getComposant();
 				if (! res.contains(T) && T!=null )
@@ -243,6 +248,14 @@ public class Composite extends $Composant implements _Ouvert {
 	public List<In> getArrayEntreesInterieure() {
 		return arrayEntreesInterieure;
 	}
+
+	/**
+	 * Ajoute la connexion de l'entree du composite, a une liste memoireSortieInterieur, sans effectuer la connexion
+	 * @ensure la connexion appartient a la liste
+	 */
+	public void addSortieInterieur(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
+		memoireSortiesInterieur.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
+	}
 	// ***********************************************
 	// Methodes implémentées issuent de l'heritage //
 	// **********************************************
@@ -290,4 +303,49 @@ public class Composite extends $Composant implements _Ouvert {
 		
 		return res;
 	}
+
+
+	private $Composant findComposant(int numero){
+		for(int i=0;i<ListComposant.size();i++){
+			if (ListComposant.get(i).getNumero() == numero)
+				return ListComposant.get(i);
+		}
+		return null;
+		
+	}
+	public void connectAllFromList() {
+		$Composant comp, compi;
+		List memoire, sortie;
+		Couple c; 
+		
+		// COnnecte les composant entre eux
+		for(int i=0; i<nbComposant(); i++){
+			comp = ListComposant.get(i);
+			memoire = comp.getMemoireSortie();
+			for(int j=0; j<comp.nbSorties();j++){
+				sortie = (List) memoire.get(j);
+				for(int k=0; k<sortie.size();k++){
+					c = (Couple) sortie.get(k);
+					// Si c.x == 0 alors il s'agit d'une entreeInterieur du composite
+					if (c.x == 0){ 
+						connect(comp, j, this, c.y);
+					} else {
+						compi = findComposant(c.x);
+						connect(comp, j, compi, c.y);
+					}
+				}
+			}
+		}
+		
+		// COnnecte les sorties Interieures aux composants interieurs
+		for(int i=0; i<nbEntrees();i++){
+			memoire = memoireSortiesInterieur.get(i);
+			for(int j=0; j<memoire.size();j++){
+				c = (Couple) memoire.get(j);
+				compi = findComposant(c.x);
+				connect(this,i,compi,c.y);
+			}
+		}
+	}
+			
 }
