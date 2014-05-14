@@ -9,9 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import jus.util.assertion.Require;
-
 import circuit._Ouvert;
-
 import port.In;
 import port.Out;
 import composant.$Composant;
@@ -290,9 +288,39 @@ public class Composite extends $Composant implements _Ouvert {
 			res = res + ListComposant.get(i).toString() + "\n";
 		return res;
 	}
-	public String toString2()
-	{
-		return "fonction a faire :/";
+	public String toString2(){
+		composant.transformateur.$Transformateur tr;
+		composant.generateur.$Generateur ge;
+		composant.recepteur.$Recepteur re;
+		String res = "\n";		
+		for(int i=0;i<this.ListComposant.size();i++)
+		{
+			if (this.ListComposant.get(i) instanceof composant.transformateur.$Transformateur)
+				{
+				tr = (composant.transformateur.$Transformateur) (this.ListComposant.get(i));
+				res += tr.toString2() + "\n";
+				}
+			else if (this.ListComposant.get(i) instanceof composant.generateur.$Generateur)
+			{
+				ge = (composant.generateur.$Generateur) this.ListComposant.get(i);
+				res += ge.toString2() + "\n";
+			}
+			else if (this.ListComposant.get(i) instanceof composant.recepteur.$Recepteur)
+			{
+				re = (composant.recepteur.$Recepteur) this.ListComposant.get(i);
+				res += re.toString2() + "\n";
+			}
+		}
+		res+= "[";
+		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
+		{
+			res+= this.arrayEntrees.get(i).toString2();
+		}
+		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
+		{	
+			res+= this.arraySorties.get(i).toString2();
+		}
+		res+= "]\n";
 	}
 	public String toDebug() {
 		String res = "\n Composite PE et PS: \n" + "InIn :" + arrayEntrees.toString() + "\n"+ arraySortiesInterieure.toString();
