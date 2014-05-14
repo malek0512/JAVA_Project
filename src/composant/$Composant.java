@@ -65,6 +65,13 @@ public abstract class $Composant implements Comparable<$Composant> {
 	protected List<In> arrayEntrees;
 	protected String Nom;
 	protected int Numero;
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(int numero) {
+		Numero = numero;
+	}
+
 	protected int nbEntreeMax;
 	protected int nbSortieMax;
 	public enum niveau {Bas,Haut};
@@ -73,7 +80,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 	protected couleur c;
 	protected int debut,fin;
 	protected List<List<Couple>> memoireSortie;
-
+	
 
 	public $Composant(String nom, int numero, int nbEntreeMax, int nbSortieMax) {
 		super();

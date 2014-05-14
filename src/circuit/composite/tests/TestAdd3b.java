@@ -1,6 +1,7 @@
-package circuit.composite;
+package circuit.composite.tests;
 
 import circuit.CircuitTestUnitaire;
+import circuit.composite.Add3b;
 
 public class TestAdd3b {
 	

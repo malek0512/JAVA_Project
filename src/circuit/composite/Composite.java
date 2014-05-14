@@ -169,6 +169,7 @@ public class Composite extends $Composant implements _Ouvert {
 		}
 
 	}
+	
 	private void Visite_PP(Composite G,$Composant u){
 		List<$Composant> adj;
 		$Composant v;

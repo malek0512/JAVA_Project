@@ -1,7 +1,8 @@
-package circuit.composite;
+package circuit.composite.tests;
 
 import circuit.CircuitTestUnitaire;
 import circuit.Ferme;
+import circuit.composite.Implique;
 import composant.$Composant.niveau;
 import composant.generateur.Itr;
 import composant.recepteur.$Recepteur;

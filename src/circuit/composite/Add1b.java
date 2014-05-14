@@ -15,12 +15,13 @@ public class Add1b extends Composite{
 	
 	public Add1b(int numero) {
 		super("Add1b",numero,3,2);
+		addComposant(nand4);
 		addComposant(xor1);
 		addComposant(xor2);
 		addComposant(nand1);
 		addComposant(nand2);
 		addComposant(nand3);
-		addComposant(nand4);
+		
 		
 		// Entrees
 		// a_0 sur port 0, 
