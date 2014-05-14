@@ -311,16 +311,18 @@ public class Composite extends $Composant implements _Ouvert {
 				res += re.toString2() + "\n";
 			}
 		}
+		
 		res+= "[";
 		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
 		{
-			res+= this.arrayEntrees.get(i).toString2();
+			res+= "E" + this.arrayEntrees.get(i).toString2() + ";";
 		}
 		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
 		{	
-			res+= this.arraySorties.get(i).toString2();
+			res+= "S" + this.arraySorties.get(i).toString2() + ";";
 		}
 		res+= "]\n";
+		return res;
 	}
 	public String toDebug() {
 		String res = "\n Composite PE et PS: \n" + "InIn :" + arrayEntrees.toString() + "\n"+ arraySortiesInterieure.toString();

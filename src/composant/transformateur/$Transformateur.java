@@ -8,14 +8,6 @@ import composant.$Composant;
 
 public abstract class $Transformateur extends $Composant {
 
-	public class Nand {
-
-		public Nand() {
-			// TODO Auto-generated constructor stub
-		}
-
-	}
-
 	/**
 	 * Constructeur d'un transformateur
 	 * 

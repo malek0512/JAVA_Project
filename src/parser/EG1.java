@@ -14,9 +14,9 @@ import circuit.Ferme;
 import circuit.composite.Composite;
 
 public class EG1 implements EG1Constants {
-private static $Composant which_composant(String name, int num){
+private static $Composant which_composant(String name, int num, String infC){
   switch (name){
-        case "Itr" : return ($Composant) new Itr(name,num,niveau.Bas);
+        case "Itr" : return ($Composant) new Itr(name,num,infC);
         case "Vcc" : return ($Composant) new Vcc(name,num);
         case "Gnd" : return ($Composant) new Ground(name,num);
         case "Led" : return ($Composant) new Led(name,num);
@@ -33,14 +33,17 @@ private static $Composant which_composant(String name, int num){
     EG1 parser = new EG1(System.in);
     System.out.println("Entrer un circuit :" );
     Ferme circuit = DEF_CIRCUIT();
+    circuit.connectAllFromList();
+    circuit.execute();
     System.out.println(circuit.toString2());
   }
 
   static final public Ferme CIRCUIT(Ferme res) throws ParseException {
-        Token numt, numSt,numBt,numSBt,namt;
+        Token numt, numSt,numBt,numSBt,namt,infCT;
         int nbS = 0;
         int num, numS,numB,numSB;
         String name;
+        String infC;
         $Composant comp;
     label_1:
     while (true) {
@@ -56,25 +59,36 @@ private static $Composant which_composant(String name, int num){
       numt = jj_consume_token(NUM);
       jj_consume_token(10);
       namt = jj_consume_token(ID);
-                        num  = Integer.parseInt(numt.image); //numero du composant
-                        name = namt.image; //nom du composant
-                        comp = which_composant(name,num);//type du composant
-
+                 infC="";
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 11:
         jj_consume_token(11);
-                         res.addComposant(comp);
+        infCT = jj_consume_token(ID);
+        jj_consume_token(12);
+                 infC = infCT.image;
         break;
       default:
         jj_la1[1] = jj_gen;
         ;
       }
+                        num  = Integer.parseInt(numt.image); //numero du composant
+                        name = namt.image; //nom du composant
+                        comp = which_composant(name,num,infC);//type du composant
+
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 12:
-        jj_consume_token(12);
+      case 13:
+        jj_consume_token(13);
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 14:
+        jj_consume_token(14);
         numSt = jj_consume_token(NUM);
                          numS = Integer.parseInt(numSt.image);
-        jj_consume_token(13);
+        jj_consume_token(15);
         label_2:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -82,36 +96,36 @@ private static $Composant which_composant(String name, int num){
             ;
             break;
           default:
-            jj_la1[2] = jj_gen;
+            jj_la1[3] = jj_gen;
             break label_2;
           }
           //* pour chaque composant
                                           numBt = jj_consume_token(NUM);
-          jj_consume_token(14);
+          jj_consume_token(16);
           numSBt = jj_consume_token(NUM);
                                   numB = Integer.parseInt(numBt.image); //numero du composant dest
                                   numSB = Integer.parseInt(numSBt.image); //numero du port du composant dest
-                                  comp.addSortie(numS-1,numB-1,numSB-1); //ajout de la sortie au composant		
+                                  comp.addSortie(numS-1,numB,numSB-1); //ajout de la sortie au composant
 
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case 15:
-            jj_consume_token(15);
+          case 17:
+            jj_consume_token(17);
             break;
           default:
-            jj_la1[3] = jj_gen;
+            jj_la1[4] = jj_gen;
             ;
           }
         }
-        jj_consume_token(16);
-                          res.addComposant(comp);//ajout du composant
-
+        jj_consume_token(18);
         break;
       default:
-        jj_la1[4] = jj_gen;
+        jj_la1[5] = jj_gen;
         ;
       }
+                        res.addComposant(comp);//ajout du composant
+
     }
-         {if (true) return res;}
+                 {if (true) return res;}
     throw new Error("Missing return statement in function");
   }
 
@@ -177,19 +191,19 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
   Ferme circuit = new Ferme();
   Composite compo;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 17:
-      jj_consume_token(17);
+    case 19:
+      jj_consume_token(19);
       namet = jj_consume_token(ID);
                   circuit = CIRCUIT(circuit); //Je pense qu'on le lui passera en parametre, sinon on redescent les ligne cu-dessus, en dessous
                   name = namet.image;
                   circuit.setNom(name);
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
       ;
     }
-    jj_consume_token(18);
-         {if (true) return circuit;}
+    jj_consume_token(20);
+         circuit.connectAllFromList(); {if (true) return circuit;}
     throw new Error("Missing return statement in function");
   }
 
@@ -203,13 +217,13 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[6];
+  static final private int[] jj_la1 = new int[7];
   static private int[] jj_la1_0;
   static {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x200,0x800,0x20,0x8000,0x1000,0x20000,};
+      jj_la1_0 = new int[] {0x200,0x800,0x2000,0x20,0x20000,0x4000,0x80000,};
    }
 
   /** Constructor with InputStream. */
@@ -230,7 +244,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -244,7 +258,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -261,7 +275,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -271,7 +285,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -287,7 +301,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -296,7 +310,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 7; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -347,12 +361,12 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[19];
+    boolean[] la1tokens = new boolean[21];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -361,7 +375,7 @@ Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
         }
       }
     }
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < 21; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

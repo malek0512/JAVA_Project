@@ -278,8 +278,8 @@ public abstract class $Composant implements Comparable<$Composant> {
 	 * Mémorise la connexion sans auncune connexion au composant
 	 */
 	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
-		memoireSortie.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
-	}	
+		this.memoireSortie.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
+	}
 	
 	/**
 	 * @return the memoireSortie
@@ -287,6 +287,5 @@ public abstract class $Composant implements Comparable<$Composant> {
 	public List<List<Couple>> getMemoireSortie() {
 		return memoireSortie;
 	}
-	
 	
 }

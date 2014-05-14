@@ -31,7 +31,7 @@ public class In extends $Port {
 	public String toString() {
 		return "PortE n°" + Numero + " est " + Valide + " a l'etat " + Value;
 	}
-	public String toString2() //y a n'y a rien a decrire au niveau des ports d'entrée, lolilol 
+	public String toString2() //y a n'y a rien a decrire au niveau des ports d'entrée 
 	{
 		return "";
 	}

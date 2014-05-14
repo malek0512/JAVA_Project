@@ -1,7 +1,7 @@
 package composant.generateur;
 
 import composant.generateur.$Generateur;
-
+import jus.util.assertion.Require;
 
 /**
  * 
@@ -19,6 +19,20 @@ public class Itr extends $Generateur {
 		this.value = etat;
 	}
 
+	/**
+	 * initialise avec le nom, le numero, et l'état sous forme de string
+	 * @require : Etat.equals("bas") || Etat.equals("haut")
+	 */
+	public Itr(String nom, int idComposant, String etat){ 
+		super(nom,idComposant,1);
+		if (etat.equals("haut"))
+			setNiveau(niveau.Haut);
+		else if (etat.equals("bas"))
+			setNiveau(niveau.Bas);
+		else
+			throw new Require("Etat n'est pas valide");
+	}
+	
 	/**
 	 * @param niveau = {Bas,Haut}
 	 * ensure modifie le niveau du generateur : 

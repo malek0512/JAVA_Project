@@ -71,6 +71,8 @@ public class Ferme implements _Circuit {
 		}
 	}	
 	
+	
+	
 	public void connect($Composant A, int noPortSortie, $Composant B, int noPortEntree){
 			if (A.nbSorties()>noPortSortie && B.nbEntrees()>noPortEntree){ 
 				In PortE = B.entreeList().get(noPortEntree);
@@ -223,7 +225,6 @@ public class Ferme implements _Circuit {
 		$Composant comps, compi;
 		List memoire, sortie;
 		Couple c; 
-		
 		// COnnecte les composant entre eux		
 		for(int i=0;i<listGenerateur.size();i++){
 			comps = listGenerateur.get(i);;
