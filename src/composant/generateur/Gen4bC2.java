@@ -34,4 +34,10 @@ public class Gen4bC2 extends $Generateur{
 		this.etat = etat;
 		spreadNiveau();
 	}
+	/**
+	 * retourne les infos du generateur
+	 */
+	public String toString() {
+		return "Generateur " + Nom + " N° " + Numero + " a l'etat " + getEtat();
+	}
 }

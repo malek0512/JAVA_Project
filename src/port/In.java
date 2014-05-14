@@ -39,6 +39,21 @@ public class In extends $Port {
 	 */
 	public String toString2() //y a n'y a rien a decrire au niveau des ports d'entrée 
 	{
-		return "";
+//		// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
+//		String res = new String("#" + this.Numero + "(");
+////		if (ListPE.get(0).getComposant()!=null)
+//			res = res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).getNumero());
+////		else
+////			res = res.concat("" + this.getNumero() + "#" + ListPE.get(0).getNumero());
+//		
+//		//il y avais au moins un element dans la liste in
+//		for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+////			if (ListPE.get(i).getComposant()!=null)
+//				res = res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).getNumero());
+////			else
+////				res = res.concat("," + this.getNumero() + "#" + ListPE.get(i).getNumero());
+//		}
+//		res = res.concat(")");
+		return "";//res;
 	}
 }

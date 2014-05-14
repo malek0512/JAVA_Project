@@ -21,11 +21,7 @@ public class Composite extends $Composant implements _Ouvert {
 	private List<Out> arraySortiesInterieure; //list des port out pour les composant interne 
 	private List<List<Couple>> memoireSortiesInterieur;
 	
-	public void setNum(int n)
-	{
-		this.Numero = n;
-	}
-	
+
 	/**
 	 * Constructeur Composite avec nom, numero, nbEntre et nbSortie
 	 * @param nom : nom du composite
@@ -210,7 +206,7 @@ public class Composite extends $Composant implements _Ouvert {
 	 */
 	public boolean estExecutable(){
 		triTopologique();
-		return executable;
+		return true; //executable;
 	}
 	
 	// ***********************************************
@@ -267,6 +263,11 @@ public class Composite extends $Composant implements _Ouvert {
 	 */
 	public void addSortieInterieur(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
 		memoireSortiesInterieur.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
+	}
+	
+	public void setNum(int n)
+	{
+		this.Numero = n;
 	}
 	
 	// ***********************************************
@@ -350,11 +351,11 @@ public class Composite extends $Composant implements _Ouvert {
 		res+= "[";
 		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
 		{
-			res+= "E" + this.arrayEntrees.get(i).toString2() + ";";
+			res+= "E" + this.arraySortiesInterieure.get(i).toString2() + ";";
 		}
 		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
 		{	
-			res+= "S" + this.arraySorties.get(i).toString2() + ";";
+			res+= "S" + this.arrayEntreesInterieure.get(i).toString2() + ";";
 		}
 		res+= "]\n";
 		return res;

@@ -28,6 +28,7 @@ public class Out extends $Port {
 	public Out() {
 		super();
 		ListPE = new LinkedList<In>();
+		this.Numero = 0;
 	}
 
 	
@@ -97,18 +98,37 @@ public class Out extends $Port {
 	/**
 	 * @require ListePE != Null
 	 * @author Alex
-	 */
+	 */ 
+	//TODO A ccorriger la fonction
+//	public String toString2(){
+//		// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
+//		String res = new String("#" + this.Numero + "(");
+////		if (ListPE.get(0).getComposant()!=null)
+//			res = res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).getNumero());
+////		else
+////			res = res.concat("" + this.getNumero() + "#" + ListPE.get(0).getNumero());
+//		
+//		//il y avais au moins un element dans la liste in
+//		for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+////			if (ListPE.get(i).getComposant()!=null)
+//				res = res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).getNumero());
+////			else
+////				res = res.concat("," + this.getNumero() + "#" + ListPE.get(i).getNumero());
+//		}
+//		res = res.concat(")");
+//		return res;
+//	}
 	public String toString2(){// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
-		String res = new String("#" + Numero + "(");
-		res = res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).getNumero());
+		String res = new String("->#" + Numero + "(");
+
+		res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).Numero);	
 		//il y avais au moins un element dans la liste in
 		for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
-		res = res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).getNumero()); 
+		res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).Numero); 
 		}
-		res = res.concat(")");
+		res.concat(")\n");
 		return res;
 	}
-
 	/* Accesseur pour les invariants et requires */
 	/**
 	 * @return the listPE

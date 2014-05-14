@@ -30,30 +30,23 @@ public class CircuitTestUnitaire {
 				Circuit.connect(c, i, L, 0);
 			}
 		} else{
-			Itr retenue_entrante = new Itr ("retenue_entrante", 0,niveau.Bas);
-			Gen4bC2 gen4 = new Gen4bC2 ("Gen4bC2", 1,0);
-			Aff4bC2 aff4 = new Aff4bC2("Aff4bC2", 2);
-			Led retenue_sortante = new Led("retenue_sortante",3);
+			Itr retenue_entrante = new Itr ("retenue_entrante", 1,niveau.Bas);
+			Gen4bC2 gen4a = new Gen4bC2 ("Opérande A", 2,0);
+			Gen4bC2 gen4b = new Gen4bC2 ("Opérande B", 3,0);
+			Aff4bC2 aff4 = new Aff4bC2("Resultat", 4);
+			Led retenue_sortante = new Led("retenue_sortante",5);
 			Circuit.addGenerateur(retenue_entrante);
-			Circuit.addGenerateur(gen4);
+			Circuit.addGenerateur(gen4a);
+			Circuit.addGenerateur(gen4b);
 			Circuit.addRecepteur(aff4);
 			Circuit.addRecepteur(retenue_sortante);
 			
-//			Circuit.connect(retenue_entrante, 0, c, 4);
-//			Circuit.connect(c,4,retenue_sortante, 0);
-//			for(int i=0; i<4; i++){
-//				Circuit.connect(gen4, i, c, i);
-//				Circuit.connect(c, i, aff4, i);
-//			}
-			c.setNumero(4);
-//			retenue_entrante.addSortie(0, 4, 4);
-//			System.out.println(retenue_entrante.getMemoireSortie().get(0).toString());
-//			retenue_sortante.addSortie(0, 4, numeroEntreeComposant)
-//			Circuit.connectAllFromList();
-			Circuit.connect(retenue_entrante, 0, c, 4);
+//			c.setNumero(4);
+			Circuit.connect(retenue_entrante, 0, c, 8);
 			Circuit.connect(c,4,retenue_sortante, 0);
 			for(int i=0; i<4; i++){
-				Circuit.connect(gen4, i, c, i);
+				Circuit.connect(gen4a, i, c, i);
+				Circuit.connect(gen4b, i, c, i+4);
 				Circuit.connect(c, i, aff4, i);
 			}
 
@@ -79,14 +72,15 @@ public class CircuitTestUnitaire {
 						((Itr) Circuit.listGenerateur.get(j)).setNiveau(etat);
 				}
 				Circuit.execute();
-				System.out.println(Circuit.toString2());
+				System.out.println(Circuit.toString());
 			}
 		} else {
 			for(int i=-8 ; i<8; i++){
 				((composant.generateur.Gen4bC2) Circuit.listGenerateur.get(1)).setEtat(i);
+				((composant.generateur.Gen4bC2) Circuit.listGenerateur.get(2)).setEtat(1);
 				Circuit.execute();
+				System.out.println(Circuit.toString());
 			}
-			System.out.println(Circuit.toString2());
 		}
 	}
 	

@@ -61,9 +61,9 @@ public abstract class $Transformateur extends $Composant {
 		res = res.concat(arraySorties.get(0).toString2());
 		for (int i=1; i<arraySorties.size(); i++)
 		{
-			res = res.concat("\n\t->"+ arraySorties.get(i).toString2());
+			res = res + ("\n\t->"+ arraySorties.get(i).toString2());
 		}
-		res = res.concat(">");
+		res = res+(">");
 		return res;
 	}
 }

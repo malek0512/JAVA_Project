@@ -22,13 +22,15 @@ public class Aff4bC2 extends $Recepteur{
 	}
 	
 	public void execute(){
-		if(estExecutable()){
+//		if(estExecutable()){
 			// Recupere la valeure des entrees vers un int
-			for(int i=0; i<arrayEntrees.size(); i++){
-				if (this.arrayEntrees.get(i).getValue())
-					this.etat = this.etat * ((int) Math.pow(2, i));
+			for(int i=0; i<arrayEntrees.size()-1; i++){
+				if (arrayEntrees.get(i).getValue())
+					this.etat = 1 * ((int) Math.pow(2, i+1)) + this.etat;
 			}
-		}
+			if (arrayEntrees.get(3).getValue())
+				this.etat = -1 * this.etat;
+//		}
 	}
 
 	public String toString(){
