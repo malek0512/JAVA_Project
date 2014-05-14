@@ -38,4 +38,5 @@ public class Led extends $Recepteur {
 		return "{" + this.value.toString() + "}";
 	}
 
+
 }

@@ -14,6 +14,7 @@ import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.TextField;
 
 public class Menu extends JFrame {
 
@@ -63,10 +64,6 @@ public class Menu extends JFrame {
 		btnTestCircuit.setBounds(362, 111, 117, 25);
 		getContentPane().add(btnTestCircuit);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(12, 175, 467, 163);
-		getContentPane().add(textArea);
-		
 		textField = new JTextField();
 		textField.setBounds(80, 15, 399, 19);
 		getContentPane().add(textField);
@@ -95,6 +92,17 @@ public class Menu extends JFrame {
 		lblCo.setFont(new Font("Dialog", Font.BOLD, 10));
 		lblCo.setBounds(12, 17, 70, 15);
 		getContentPane().add(lblCo);
+		
+		TextArea textArea_1 = new TextArea();
+		textArea_1.setEditable(false);
+		textArea_1.setBounds(12, 182, 467, 158);
+		getContentPane().add(textArea_1);
+		
+		TextField textField_1 = new TextField();
+		textField_1.setFont(new Font("Dialog", Font.ITALIC, 12));
+		textField_1.setText("                        Entrez votre circuit");
+		textField_1.setBounds(12, 46, 332, 90);
+		getContentPane().add(textField_1);
 		
 	}
 }

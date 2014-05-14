@@ -32,7 +32,7 @@ public class CircuitTestUnitaire {
 			Itr retenue_entrante = new Itr ("retenue_entrante", 0,niveau.Bas);
 			Gen4bC2 gen4 = new Gen4bC2 ("Gen4bC2", 1,0);
 			Aff4bC2 aff4 = new Aff4bC2("Aff4bC2", 2);
-			Led retenue_sortante = new Led("Retenue",3);
+			Led retenue_sortante = new Led("retenue_sortante",3);
 			Circuit.addGenerateur(retenue_entrante);
 			Circuit.addGenerateur(gen4);
 			Circuit.addRecepteur(aff4);
@@ -45,10 +45,11 @@ public class CircuitTestUnitaire {
 //				Circuit.connect(c, i, aff4, i);
 //			}
 			c.setNumero(4);
-			retenue_entrante.addSortie(0, 4, 4);
+//			retenue_entrante.addSortie(0, 4, 4);
+//			System.out.println(retenue_entrante.getMemoireSortie().get(0).toString());
 //			retenue_sortante.addSortie(0, 4, numeroEntreeComposant)
-			Circuit.connectAllFromList();
-//			Circuit.connect(retenue_entrante, 0, c, 4);
+//			Circuit.connectAllFromList();
+			Circuit.connect(retenue_entrante, 0, c, 4);
 			Circuit.connect(c,4,retenue_sortante, 0);
 			for(int i=0; i<4; i++){
 				Circuit.connect(gen4, i, c, i);

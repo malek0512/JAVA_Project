@@ -35,4 +35,9 @@ public class Aff4bC2 extends $Recepteur{
 		return "Le Aff4bC2 n° " + getNumero() + " est a l'état "+ etat.toString();
 	}
 
+	public String infoComplementaire()
+	{
+		return "{" + this.etat.toString() + "}";
+	}
+
 }

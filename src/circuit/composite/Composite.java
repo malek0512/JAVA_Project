@@ -311,6 +311,10 @@ public class Composite extends $Composant implements _Ouvert {
 				re = (composant.recepteur.$Recepteur) this.ListComposant.get(i);
 				res += re.toString2() + "\n";
 			}
+			else {
+				
+				res += ((Composite) this.ListComposant.get(i)).toString2() + "\n";
+			}
 		}
 		res+= "[";
 		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
@@ -322,6 +326,7 @@ public class Composite extends $Composant implements _Ouvert {
 			res+= this.arraySorties.get(i).toString2();
 		}
 		res+= "]\n";
+		return res;
 	}
 	public String toDebug() {
 		String res = "\n Composite PE et PS: \n" + "InIn :" + arrayEntrees.toString() + "\n"+ arraySortiesInterieure.toString();
