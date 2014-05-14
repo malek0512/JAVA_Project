@@ -1,7 +1,7 @@
 /**
  * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
  */
-options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(EG1)package parser;
+options{  JDK_VERSION = "1.5";  static = false;}PARSER_BEGIN(EG1)package parser;
 import composant.$Composant.niveau;
 import composant.generateur.$Generateur;
 import composant.transformateur.$Transformateur;
