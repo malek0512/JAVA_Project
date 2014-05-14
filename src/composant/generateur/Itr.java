@@ -27,10 +27,14 @@ public class Itr extends $Generateur {
 		super(nom,idComposant,1);
 		if (etat.equals("haut"))
 			setNiveau(niveau.Haut);
-		else if (etat.equals("bas"))
+		else //if (etat.equals("bas"))
 			setNiveau(niveau.Bas);
-		else
-			throw new Require("Etat n'est pas valide");
+		/*else
+			{
+			System.out.println(etat);
+			throw new Require("ICII :" + etat + "FINNN" + "Etat n'est pas valide");
+			
+			*/
 	}
 	
 	/**

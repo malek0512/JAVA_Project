@@ -21,6 +21,11 @@ public class Composite extends $Composant implements _Ouvert {
 	private List<Out> arraySortiesInterieure; //list des port out pour les composant interne 
 	private List<List<Couple>> memoireSortiesInterieur;
 	
+	public void setNum(int n)
+	{
+		this.Numero = n;
+	}
+	
 	/**
 	 * Constructeur Composite avec nom, numero, nbEntre et nbSortie
 	 * @param nom : nom du composite
@@ -50,7 +55,7 @@ public class Composite extends $Composant implements _Ouvert {
 		}
 //		spreadOutOutComposite();
 	}
-	
+
 	/**
 	 * Connecte respectivement un noPortSortie du composant A, à un noPortEntree d'un composant B
 	 * @ensure A.noPortSortie.valide == B.noPortEntree.valide == 1

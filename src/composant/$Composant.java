@@ -258,6 +258,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 		memoireSortie.get(numeroSortie).add(new Couple(numeroComposant,numeroEntreeComposant));
 		//else
 			//throw new Require("!(numeroSortie <= nbSorties() && numeroSortie >=0");
+		
 	}
 	
 	/**
