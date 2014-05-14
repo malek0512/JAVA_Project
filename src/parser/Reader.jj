@@ -2,6 +2,8 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
  */
 options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(EG1)package parser;
+import java.util.List;
+import java.util.LinkedList;
 import composant.$Composant.niveau;
 import composant.generateur.$Generateur;
 import composant.transformateur.$Transformateur;
@@ -16,7 +18,8 @@ import circuit.Ferme;
 import circuit.composite.Composite;
 
 public class EG1{
-private static $Composant which_composant(String name, int num, String infC){
+private static $Composant which_composant(String name, int num, String infC,List<Composite> lCF){
+  Composite c;
   switch (name){
  	case "Itr" : return ($Composant) new Itr(name,num,infC); 
  	case "Vcc" : return ($Composant) new Vcc(name,num); 
@@ -27,30 +30,34 @@ private static $Composant which_composant(String name, int num, String infC){
  	case "Ou" : return ($Composant) new Ou(name,num); 
  	case "Oux" : return ($Composant) new Oux(name,num); 
  	default:
- 		return null; //Ca serait un composite definit avant
-	}
-}  public static void main(String args []) throws ParseException  {    EG1 parser = new EG1(System.in);
+  	for(int i=0;i<lCF.size();i++)
+		{		  if(lCF.get(i).getNom().equals(name))
+		  {		    c =lCF.get(i);
+		    c.setNum(num);
+		    return (($Composant) c) ;
+		  }
+		}
+		return null;
+}
+}
+  public static void main(String args []) throws ParseException  {    EG1 parser = new EG1(System.in);
     System.out.println("Entrer un circuit :" );
     Ferme circuit = DEF_CIRCUIT();
     circuit.connectAllFromList();
     circuit.execute();
     System.out.println(circuit.toString2());
   }}PARSER_END(EG1)SKIP :{  " "| "\r"| "\t"| "\n"}
-
-//Attention comme en caml, le match des token se fait dans de maniere sequentielle
-//Ne mettre aucun apres ID
-//TOKEN ://{ < CIRCUIT: "circuit" >//| < COMPOSITE: "composite" >//| < PVIRGULE: ";" >//| < VIRGULE: "," >//| < PAR_OU: "(" >//| < PAR_FER: ")" >//| < CRO_OU: "[" >//| < CRO_FER: "]" >//| < DIESE: "#" >//| < DASH: "-" >//| < ARROW_RIGHT: ">" >//| < ARROW_LEFT: "<" >////}
 TOKEN : /* OPERATORS */{  < NUM: ( <DIGIT> )+ >
 | < ID: <LETTER> (<DIGIT> | <LETTER>)+ >
 | < #LETTER: ["a"-"z","A"-"Z"] >
-| < #DIGIT: ["0" - "9"] > }Ferme CIRCUIT(Ferme res) : {	Token numt, numSt,numBt,numSBt,namt,infCT;	int nbS = 0;	int num, numS,numB,numSB;	String name;
+| < #DIGIT: ["0" - "9"] > }Ferme CIRCUIT(Ferme res,List<Composite> lCF) : {	Token numt, numSt,numBt,numSBt,namt,infCT;	int nbS = 0;	int num, numS,numB,numSB;	String name;
 	String infC;	$Composant comp;}{	(		"<" numt=<NUM> 		"|" namt=<ID>
 		{infC="";}
 		(//info complementaire		"{" infCT =<ID> "}"
 		{infC = infCT.image;}		)?	
 		{			num  = Integer.parseInt(numt.image); //numero du composant
 			name = namt.image; //nom du composant
-			comp = which_composant(name,num,infC);//type du composant
+			comp = which_composant(name,num,infC,lCF);//type du composant
 		}		(//pas de sortie		    ">"		)?							//au moins une sortie		(//*
 			"->#"			numSt=<NUM>
 			{numS = Integer.parseInt(numSt.image);}//numero de sorti			"("			(//* pour chaque composant				numBt=<NUM> "#" numSBt=<NUM>
@@ -63,83 +70,113 @@ private static $Composant which_composant(String name, int num, String infC){
 		}
 			)*
 	//fini de lire la liste des composant du circuit		{return res;}}
-/*
-Composite COMPOSITE(List<Composite> lCF) : //lCF = liste composite final
-{
-	Token numt, numSt,numBt,numSBt,namt;
+Composite COMPOSITE(Composite res, List<Composite> lCF) : //lCF = liste composite final
+  	{  	Token numt, numSt,numBt,numSBt,namt,infCT;
 	int nbS = 0;
-	int num, numS,numB,numSB; //num : numero du composant, numS : numero de sortie du composant, meme prefixe avec B : composant cible
+	int num, numS,numB,numSB;
 	String name;
-	Composite res;
+	String infC;
 	$Composant comp;
-}
+	}
 {
-(
-		"<" numt=<NUM> //numero composant token
-		"|" namt=<ID> //nom du composant token
-		{//ajout du composant a la liste des composant
-		num  = Integer.parseInt(numt.image);
-		name = namt.image;
+	(
+		"<" numt=<NUM> 
+		"|" namt=<ID>
+		{infC="";}
+
+		(//info complementaire
+		"{" infCT =<ID> "}"
+		{infC = infCT.image;}
+		)?	
+		{
+			num  = Integer.parseInt(numt.image); //numero du composant
+			name = namt.image; //nom du composant
+			comp = which_composant(name,num,infC,lCF);//type du composant
 		}
-		//test si pas de sortie
-		(
+		(//pas de sortie
 		    ">"
-			{comp = new Led(name,num);//maj dans la liste
-			res.addComposant(comp,num);
-			}
-			//Pas de donne a metre dans lCD
-			//Ici il n'existe qu'un seul type de recepteur, sinon nous aurons qu'a faire un switch nam 
 		)?
-		
+					
 		//au moins une sortie
 		(//*
-			{
-			comp = which_composant(name,num,LCF);
-			res.addComposant(comp,num);//ajoute le composant a l'emplacement d'index num, composant encore inconnue
-			}
 			"->#"
-			numSt=<NUM> //numero de sortie
-			{numS = Integer.parseInt(numSt.image);}//maj du numero de sortie
+			numSt=<NUM>
+			{numS = Integer.parseInt(numSt.image);}//numero de sorti
 			"("
 			(//* pour chaque composant
-				numBt=<NUM> "#" numSBt=<NUM> // numero du composant ; numero de sortie
-				
+				numBt=<NUM> "#" numSBt=<NUM>
 				{
-				  numB = Integer.parseInt(numBt.image);
-				  numSB = Integer.parseInt(numSBt.image);
-				  comp.addSortie(numS,numB,numSB);
+				  numB = Integer.parseInt(numBt.image); //numero du composant dest
+				  numSB = Integer.parseInt(numSBt.image); //numero du port du composant dest
+				  comp.addSortie(numS-1,numB,numSB-1); //ajout de la sortie au composant
 				}
 				(",")?
+
 			)*
 			")>"
-		
-		)*
-)*
 
-{lCF.add(res);}
-}	
-*/
+		)?
+		{
+			res.addComposant(comp);//ajout du composant
+		}
+		
+	)*
+
+	"["
+	(	  "E"
+	  "#"	  numt=< NUM >
+	  "("
+	  numSt=< NUM >
+	  "#"
+	  numSBt=< NUM >
+	  ")"
+	  {
+	    num = Integer.parseInt(numt.image);
+		numS = Integer.parseInt(numSt.image);
+		numSB = Integer.parseInt(numSBt.image);
+		res.addSortieInterieur(num-1, numS, numSB-1);	  }
+	";"
+	)*
+	"]"
+	{	  return res;
+	}
+}
 
 Ferme DEF_CIRCUIT() : 
-{ Token namet;
-  String name; 
+{ Token namet,et,st;
+  String name;
+  int n = 1;
+  int e,s;
   Ferme circuit = new Ferme();
   Composite compo;
+  List<Composite> lCF = new LinkedList<Composite>();
 } 
 {
-//  	//Ajouté par malek ://	(//		"composite" //		namet=<ID> //		//		{//		  //compo = COMPOSITE(); A faire//		  name = namet.image;//		  circuit.setNom(name);////		}//	)?
-
-	//Alex
-	(
+  	(		"composite "
+		namet=<ID>
+		"("
+		et=< NUM >
+		","
+		st=< NUM >
+		")"
+		{
+		  name = namet.image;
+		  e=Integer.parseInt(et.image);
+		  s=Integer.parseInt(st.image);
+		  compo = new Composite(name,n,e,s);		  COMPOSITE(compo,lCF);
+		  n++;
+		  compo.connectAllFromList();
+		  lCF.add(compo);
+		}
+	)*
 		"circuit " 
 		namet=<ID> 
 		{
-		  circuit = CIRCUIT(circuit); //Je pense qu'on le lui passera en parametre, sinon on redescent les ligne cu-dessus, en dessous
+		  circuit = CIRCUIT(circuit,lCF);
 		  name = namet.image;
 		  circuit.setNom(name);
 
 		}
-	)?
 		";" //Ajouter pour qu'il reconnaisse que c'est la fin du circuit
 	
 	{circuit.connectAllFromList(); return circuit;}

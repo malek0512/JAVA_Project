@@ -24,8 +24,6 @@ public class In extends $Port {
 	 * @return le composant liée du port
 	 */
 	public $Composant getComposant() {
-		if (A==null)
-			System.out.println("eror");
 		return A;
 	}
 	
