@@ -23,42 +23,62 @@ Liste de composants
  */
 import composant.recepteur.Led;
 
+
+/**
+ * Invariant : N'a aucune connexion libre
+ */
 public class Ferme implements _Circuit {
-	protected List<$Generateur> listGenerateur;
-	protected List<$Composant> listComposant;
-	protected List<$Recepteur> listRecepteur;
-//	protected Map<Integer,List<Couple>> memoireSortie;
+	protected List<$Generateur> listGenerateur; //list de generateur
+	protected List<$Composant> listComposant; //list des composants composite et tranformateur
+	protected List<$Recepteur> listRecepteur; //list des recepteur
 	private String Nom;
 	
+	/**
+	 * Constructeur, initialise le circuit ferme sans aucun composant.
+	 */
 	public Ferme(){
 		listGenerateur = new LinkedList<$Generateur>();
 		listComposant = new LinkedList<$Composant>();  
 		listRecepteur = new LinkedList<$Recepteur>();
-//		memoireSortie = new HashMap<Integer,List<Couple>>();
 	}
 	
 	/**
-	 * @require $Composant.getNumero() unique  
+	 * vrai si comp est dans le circuit
+	 * @param comp
+	 * @return vrai si comp est dans le circuit
+	 */
+	public boolean estDansCircuit($Composant comp)
+	{
+		return (listGenerateur.contains(comp) || this.listComposant.contains(comp) || this.listRecepteur.contains(comp));
+	}
+	
+	/**
+	 * ajout un generateur, sauf si il est déja dans la liste
+	 * @require : $Composant.getNumero() unique  
+	 * @ensure : estDansCircuit(g)==true
 	 */
 	public void addGenerateur ($Generateur g){
-		if (! listGenerateur.contains(g)){
+		if (!listGenerateur.contains(g)){
 			listGenerateur.add(g);
-//			if ( ! memoireSortie.containsKey(g.getNumero()))
-//				memoireSortie.put(g.getNumero(), new LinkedList<Couple>());
-//			else 
-//				throw new Require("Attention Numero déja attribué")  ;
 		}
 	}
 	
+	/**
+	 * ajout d'un recepteur, sauf si il est déja dans la liste
+	 * @param r un recepteur
+	 * @ensure estDansCircuit(r)==true
+	 */
 	public void addRecepteur ($Recepteur r){
 		if (! listRecepteur.contains(r)){
 			listRecepteur.add(r);
-//			if ( ! memoireSortie.containsKey(r.getNumero()))
-//				memoireSortie.put(r.getNumero(), new LinkedList<Couple>());
-//			else 
-//				throw new Require("Attention Numero déja attribué")  ;
 		}
 	}
+
+	/**
+	 * ajoute le composant au circuit
+	 * @param c
+	 * @ensure estDansCircuit(c)==true
+	 */
 	public void addComposant ($Composant c){
 		if (c instanceof $Recepteur)
 			this.addRecepteur(($Recepteur) c);
@@ -71,8 +91,13 @@ public class Ferme implements _Circuit {
 		}
 	}	
 	
-	
-	
+	/**
+	 * effectue la connection entre A et B par les numeros de connexion donné
+	 * @param A composant source
+	 * @param noPortSortie numero du port de sortie de A
+	 * @param B composant destination
+	 * @param noPortEntree numero du port d'entre de A
+	 */
 	public void connect($Composant A, int noPortSortie, $Composant B, int noPortEntree){
 			if (A.nbSorties()>noPortSortie && B.nbEntrees()>noPortEntree){ 
 				In PortE = B.entreeList().get(noPortEntree);
@@ -81,6 +106,13 @@ public class Ferme implements _Circuit {
 		}
 	}
 	
+	/**
+	 * effectue la déconnection entre A et B par les numeros de connexion donné
+	 * @param A composant source
+	 * @param noPortSortie numero du port de sortie de A
+	 * @param B composant destination
+	 * @param noPortEntree numero du port d'entre de A
+	 */
 	public void deconnect($Composant A, int noPortSortie, $Composant B, int noPortEntree){
 		if (A.nbSorties()>noPortSortie && B.nbEntrees()>noPortEntree){ 
 			In PortE = B.entreeList().get(noPortEntree);
@@ -88,6 +120,10 @@ public class Ferme implements _Circuit {
 			// RMQ : PortSortie.donnect se charge de modifié PortEntre.Valide=0 et supprimer la 1ere occurrence de PortE dans la liste du port de sortie
 		}
 	}
+	
+	/*
+	 * fonction intermediaire
+	 */
 	private boolean estExecutableCircuit($Composant c, boolean OK){
 		OK = c.estExecutable();
 		int i=0;
@@ -102,6 +138,10 @@ public class Ferme implements _Circuit {
 		return OK;
 	}
 	
+	/**
+	 * vrai si le circuit est executable
+	 * @return true si le circuit est executable
+	 */
 	public boolean estExecutable(){
 		boolean OK = true;
 		int i=0;
@@ -113,6 +153,9 @@ public class Ferme implements _Circuit {
 		return OK;
 	}
 	
+	/*
+	 * fonction intermediaire
+	 */
 	private void execute($Composant c){
 		c.execute();
 		int i=0;
@@ -126,6 +169,11 @@ public class Ferme implements _Circuit {
 		}
 	}
 	
+	/**
+	 * execute le circuit
+	 * @ensure : tout les composant on effectuer calcul(), et la valeur des recepteur est mis a jour en fonction des connection
+	 * @require : this.estExecutable()
+	 */
 	public void execute() {
 		if (estExecutable()){
 			for(int i=0;i<listGenerateur.size();i++){
@@ -136,6 +184,9 @@ public class Ferme implements _Circuit {
 		}
 	}
 
+	/**
+	 * return les information sur le circuit
+	 */
 	public String toString(){
 		String res = "\n";
 		for(int i=0;i<listGenerateur.size();i++)
@@ -146,6 +197,9 @@ public class Ferme implements _Circuit {
 		return res;
 	}
 	
+	/**
+	 * return les informations sur le circuit au format de la grammaire
+	 */
 	public String toString2(){
 		Composite comp;
 		composant.transformateur.$Transformateur tr;
@@ -172,7 +226,9 @@ public class Ferme implements _Circuit {
 		return res;
 	}
 	
-	
+	/**
+	 * return les informations pour le debuggage 
+	 */
 	public String toDebug(){
 		String res = "\n";
 		for(int i=0;i<listGenerateur.size();i++)
@@ -187,21 +243,19 @@ public class Ferme implements _Circuit {
 	}
 	
 	/**
-	 * @param nom the nom to set
+	 * modifie le nom du circuit
+	 * @param nom du circuit
+	 * @ensure le circuit a pour nom nom
 	 */
 	public void setNom(String nom) {
 		Nom = nom;
 	}
 
-//	/**
-//	 * Mémorise la connexion sans auncune connexion au composant
-//	 */
-//	public void addSortie(int numeroSortie, int numeroComposant, int numeroEntreeComposant){
-//		if (memoireSortie.)
-//			memoireSortie.add(numeroSortie, new LinkedList<Couple>());
-//			memoireSortie.get(numeroSortie).add(new composant.Couple(numeroComposant,numeroEntreeComposant));
-//	}
-	
+	/**
+	 * renvoie le composant, si il n'est pas présent renvoie null
+	 * @param numero du composant desirer
+	 * @return le composant si le composant est dans le circuit, sinon renvoi null  
+	 */
 	private $Composant findComposant(int numero){
 		for(int i=0;i<listGenerateur.size();i++){
 			if (listGenerateur.get(i).getNumero() == numero)
@@ -221,6 +275,10 @@ public class Ferme implements _Circuit {
 		return null;
 		
 	}	
+
+	/**
+	 * effectue la connection de tout les composant
+	 */
 	public void connectAllFromList() {
 		$Composant comps, compi;
 		List memoire, sortie;

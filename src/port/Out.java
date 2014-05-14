@@ -30,25 +30,6 @@ public class Out extends $Port {
 		ListPE = new LinkedList<In>();
 	}
 
-	/**
-	 * initialise le port avec un numero
-	 * @ensure getValide == True
-	 * @author Alex
-	 */
-	public Out(int numero){
-		super(numero);
-		ListPE = new LinkedList<In>();
-	}
-	
-	/**
-	 * initialise le port avec un numero et une valeur
-	 * @ensure getValide == True
-	 * @author Alex
-	 */
-	public Out(int numero, boolean value){
-		super(numero,value);
-		ListPE = new LinkedList<In>();
-	}
 	
 	/* Méthodes */
 	/**
@@ -119,10 +100,10 @@ public class Out extends $Port {
 	 */
 	public String toString2(){// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
 		String res = new String("#" + Numero + "(");
-		res = res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).Numero);	
+		res = res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).getNumero());
 		//il y avais au moins un element dans la liste in
 		for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
-		res = res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).Numero); 
+		res = res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).getNumero()); 
 		}
 		res = res.concat(")");
 		return res;

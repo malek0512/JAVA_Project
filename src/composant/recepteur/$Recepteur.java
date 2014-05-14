@@ -27,12 +27,15 @@ public abstract class $Recepteur extends $Composant {
 		
 	}
 
+	/**
+	 * renvoie les information du recepteur
+	 */
 	public String toString(){
 		return "Recepteur " + Nom + "N°" + Numero;
 	}
 	
 	/**
-	 * @author Alex
+	 * renvoie les information selon la grammaire
 	 */
 	public String toString2(){
 		return "<" + Numero + "|" + Nom + "(" + nbEntreeMax + ",0)" + infoComplementaire() + ">";

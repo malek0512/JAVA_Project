@@ -1,7 +1,5 @@
 package composant.generateur;
-
 import java.util.Iterator;
-
 
 /**
  * 
