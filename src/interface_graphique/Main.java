@@ -26,7 +26,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 
 
@@ -89,6 +92,30 @@ public class Main extends JFrame {
 		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				FileInputStream file = null;
+				try {
+					file = new FileInputStream(textField_fichier.getText());
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				StringReader chaine= new StringReader(file.toString());
+				System.out.println(file.toString());
+//				try {
+//			        // read the first five chars
+//			        for (int i = 0; i < ((CharSequence) chaine).length(); i++) {
+//			            char c = (char) sr.read();
+//			            System.out.print("" + c);
+//			        }
+//
+//			        // close the stream
+//			        sr.close();
+//
+//			    } catch (IOException ex) {
+//			        ex.printStackTrace();
+//			    }
+				InstantiateToken parser = new InstantiateToken(chaine.toString());
+				circuit = parser.parser();
 			}
 		});
 		btnNewButton.setBounds(383, 10, 132, 19);
@@ -126,7 +153,7 @@ public class Main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			    circuit.connectAllFromList();
 			    circuit.execute();
-			    textArea_affichage.setText(circuit.toString2());
+			    textArea_affichage.setText(circuit.toString());
 			}
 		});
 		btnExecuter.setBounds(398, 208, 117, 25);
@@ -138,12 +165,8 @@ public class Main extends JFrame {
 				textArea_affichage.setText("");
 			}
 		});
-		btnClearTexte.setBounds(141, 208, 117, 25);
+		btnClearTexte.setBounds(210, 208, 117, 25);
 		contentPane.add(btnClearTexte);
-		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(269, 208, 117, 25);
-		contentPane.add(btnNewButton_1);
 		
 
 		

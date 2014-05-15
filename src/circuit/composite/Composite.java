@@ -197,7 +197,9 @@ public class Composite extends $Composant implements _Ouvert {
 	 */
 	protected void triTopologique(){
 		PP(this);
+//		System.out.println(ListComposant.toString());
 		Collections.sort(ListComposant);
+//		System.out.println(ListComposant.toString());
 	}
 	
 	/**
@@ -206,6 +208,23 @@ public class Composite extends $Composant implements _Ouvert {
 	 */
 	public boolean estExecutable(){
 		triTopologique();
+		
+		//Est executable ssi toute les ports d'entree du composite sont connecté
+		for(int i=0; i<arrayEntrees.size();i++){
+			if (!arrayEntrees.get(i).getValide())
+				return false;
+		}
+		
+		//Est executable ssi tout les ports de sortie possède au moins une connexion
+		for(int i=0; i<arraySorties.size();i++){
+			if (!(arraySorties.get(i).getListConnexion().size()>0))
+				return false;
+		}
+		//Est executable ssi tout les composant sont executable => leur entree satisfaites
+				for(int i=0; i<ListComposant.size();i++){
+					if (!ListComposant.get(i).estExecutable())
+						return false;
+				}
 		return true; //executable;
 	}
 	

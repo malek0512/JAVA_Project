@@ -174,7 +174,7 @@ public abstract class $Composant implements Comparable<$Composant> {
 	}
 
 	public int compareTo($Composant o) {
-		return o.fin;
+		return -1*Integer.compare(this.fin, o.fin);
 	}
 	
 	/**
