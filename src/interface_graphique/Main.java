@@ -68,7 +68,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		setTitle("TP_FINAL - MAMMAR & LE JEAN");
+		setTitle("TP_FINAL - Bool");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 533, 447);
 		contentPane = new JPanel();

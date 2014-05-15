@@ -6,6 +6,8 @@ public class Add4b extends Composite{
 	Add1b add1b = new Add1b(2);
 	public Add4b(int numero) {
 		super("Add4b",numero,9,5);
+		addComposant(add3b);
+		addComposant(add1b);
 		connect(this, 0, add3b, 0); //connecte operande a
 		connect(this, 1, add3b, 1);
 		connect(this, 2, add3b, 2);
