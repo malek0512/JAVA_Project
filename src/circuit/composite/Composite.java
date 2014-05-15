@@ -370,12 +370,12 @@ public class Composite extends $Composant implements _Ouvert {
 		res+= "[";
 		for(int i=0; i<this.arrayEntrees.size();i++)//chaque entree
 		{
-			res+= "E" + this.arraySortiesInterieure.get(i).toString2() + ";";
+			res+= "#E" + (i) + "("+ this.arraySortiesInterieure.get(i).toString2bis() + ";";
 		}
-		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
-		{	
-			res+= "S" + this.arrayEntreesInterieure.get(i).toString2() + ";";
-		}
+//		for(int i=0; i<this.arraySorties.size();i++)//chaque sortie
+//		{	
+//			res+= "S" + this.arrayEntreesInterieure.get(i).toString2() + ";";
+//		}
 		res+= "]\n";
 		return res;
 	}

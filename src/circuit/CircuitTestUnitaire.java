@@ -72,14 +72,14 @@ public class CircuitTestUnitaire {
 						((Itr) Circuit.listGenerateur.get(j)).setNiveau(etat);
 				}
 				Circuit.execute();
-				System.out.println(Circuit.toDebug());
+				System.out.println(Circuit.toString2());
 			}
 		} else {
 			for(int i=-8 ; i<8; i++){
 				((composant.generateur.Gen4bC2) Circuit.listGenerateur.get(1)).setEtat(i);
 				((composant.generateur.Gen4bC2) Circuit.listGenerateur.get(2)).setEtat(1);
 				Circuit.execute();
-				System.out.println(Circuit.toDebug());
+				System.out.println(Circuit.toString2());
 			}
 		}
 	}

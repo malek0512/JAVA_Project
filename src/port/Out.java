@@ -119,14 +119,41 @@ public class Out extends $Port {
 //		return res;
 //	}
 	public String toString2(){// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
-		String res = new String("->#" + Numero + "(");
-
-		res.concat("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).Numero);	
-		//il y avais au moins un element dans la liste in
-		for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
-		res.concat("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).Numero); 
+		String res = new String("#" + Numero + "(");
+		if (ListPE.get(0).getComposant()!=null){
+			res+=("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).Numero);	
+			//il y avais au moins un element dans la liste in
+			for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+			res+=("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).Numero); 
+			}
+		}else{
+			res+=("S" + "#" + ListPE.get(0).Numero);	
+			//il y avais au moins un element dans la liste in
+			for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+				res+=("," + "S" + "#" + ListPE.get(i).Numero);
+			}
+				
 		}
-		res.concat(")\n");
+		res+=(")");
+		return res;
+	}
+	public String toString2bis(){// de la forme : "-># <numero du port sortie> ( <numero du composant dest> # <numero du port in dest>, ...)
+		String res = new String("");
+		if (ListPE.get(0).getComposant()!=null){
+			res+=("" + ListPE.get(0).getComposant().getNumero() + "#" + ListPE.get(0).Numero);	
+			//il y avais au moins un element dans la liste in
+			for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+			res+=("," + ListPE.get(i).getComposant().getNumero() + "#" + ListPE.get(i).Numero); 
+			}
+		}else{
+			res+=("S" + "#" + ListPE.get(0).Numero);	
+			//il y avais au moins un element dans la liste in
+			for(int i=1;i<ListPE.size(); i++){//on rajoute le reste, avec un "," en debut :D
+				res+=("," + "S" + "#" + ListPE.get(i).Numero);
+			}
+				
+		}
+		res+=(")");
 		return res;
 	}
 	/* Accesseur pour les invariants et requires */

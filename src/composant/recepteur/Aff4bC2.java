@@ -8,7 +8,7 @@ public class Aff4bC2 extends $Recepteur{
 	
 	public Aff4bC2(String nom, int idComposant) {
 		super(nom,idComposant,4);
-		this.etat = 10;
+		this.etat = 0;
 	}
 
 	/**

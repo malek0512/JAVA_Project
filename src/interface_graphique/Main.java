@@ -153,7 +153,7 @@ public class Main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			    circuit.connectAllFromList();
 			    circuit.execute();
-			    textArea_affichage.setText(circuit.toString());
+			    textArea_affichage.setText(circuit.toString2());
 			}
 		});
 		btnExecuter.setBounds(398, 208, 117, 25);
